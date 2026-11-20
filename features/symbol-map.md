@@ -74,3 +74,618 @@ ave(){if(typeof ftzQueueSave==='function')ftzQueueSave();}   function status(mes
 
 LINE 8775 CHAR 22826684
 .disabled=!history.length||!!state.last;     $('ftz193Switch').disabled=!!state.last;     if($('ftz180LayoutToggle'))$('ftz180LayoutToggle').hidden=enabled;     highlight();   }   window.render=function(){     const result=original.render.apply(this,arguments);     updateUI();return result;   };   function pointerDown(e){     if(!enabled||!ready()||state.last||state.finished)return;     const el=e.target.closest('.blossom[data-i]');     if(!el||!$('bouquet').contains(el))return;     const i=Number(el.dataset.i),p=item(i);     if(!Number.isInteger(i)||!p)return;     selected=i;highlight();updateUI();     const stage=$('bouquet'),rect=stage.getBoundingClientRect();     drag={id:e.pointerId,index:i,el,origin:{...p},startX:e.clientX,startY:e.clientY,       fx:290/Math.max(rect.width,1),fy:286/Math.max(rect.height,1),changed:false};     stage.setPointerCapture(e.pointerId);     e.stopImmediatePropagation();e.preventDefault();   }   function pointerMove(e){     if(!drag||drag.id!==e.pointerId)return;     const d=drag,dx=e.clientX-d.startX,dy=e.clientY-d.startY;     if(!d.changed&&Math.hypot(dx,dy)>3){captureLegacy();pushUndo();d.changed=true;}     if(d.changed){       const pos={...d.origin,x:+clamp(d.origin.x+dx*d.fx,-69,69).toFixed(2),         y:+clamp(d.origin.y+dy*d.fy,basket()?-15:-17,basket()?84:108).toFixed(2)};       pos.z=+clamp((Number(d.origin.z)||0)+(pos.y-d.origin.y)/55,-1,1).toFixed(3);       state.positions[d.index]=pos;       d.el.style.translate=dx+'px '+dy+'px';       d.el.style.setProperty('z-index',String(zFor(pos,basket())),'important');     }     e.stopImmediatePropagation();e.preventDefault();   }   function pointerFinish(e){     if(!drag||drag.id!==e.pointerId)return;     const d=drag;drag=null;     if(d.changed){redraw();save();status('Цветок перемещён. Можно изменить поворот, размер и глубину.');}     else updateUI();     e.stopImmediatePropa
+\n# Focused API points
+\n### const types= count 1
+\nLINE 1 ata-florist-icon'));node.removeAttribute('data-florist-icon');});
+}
+
+
+const types=[{"id":"calla","name":"Белая калла","trait":"чистота и нежность","price":9,"buy":5,"rarity":"common","tags":["sincere","calm"]},{"id":"agapanthusWhite","name":"Белый агапантус","trait":"светлая гармония","price":10,"buy":6,"rarity":"rare","tags":["calm","care"]}].concat([{"id":"rose","name":"Протея","trait":"сила саванны","price":11,"buy":7,"rarity":"rare","tags":["hope","care"]},{"id":"tulip","name":"Стрелиция","trait":"свобода","price":10,"buy":6,"rarity":"rare","tags":["hope","joy"]},{"id":"sun","name":"Газания","trait":"солнечная радость","price":8,"buy":5,"rarity":"common","tags":["joy","hope"]},{"id":"daisy","name":"Остеоспермум","trait":"лёгкость","price":7,"buy":4,"rarity":"common","tags":["sincere","joy"]},{"id":"lav","name":"Агапантус","trait":"гармония","price":10,"buy":6,"rarity":"rare","tags":["calm","care"]},{"id":"white","name":"Леукоспермум","trait":"энергия","price":9,"buy":5,"rarity":"rare","tags":["hope","sincere"]},{"id":"peony","name":"Кливия","trait":"тепло","price":12,"buy":7,"rarity":"rare","tags":["love","care"]},{"id":"iris","name":"Нерине","trait":"изящество","price":10,"buy":6,"rarity":"rare","tags":["calm","love"]},{"id":"lily","name":"Глориоза","trait":"страсть","price":13,"buy":8,"rarity":"premium","tags":["passion","love"]},{"id":"hydra","name":"Цветущий алоэ","trait":"стойкость","price":10,"buy":6,"rarity":"rare","tags":["care","hope"]},{"id":"carnation","name":"Амариллис","trait":"торжество","price":11,"buy":7,"rarity":"rare","tags":["passion","joy"]},{"id":"ranunc","name":"Книфофия","trait":"огонь","price":12,"buy":7,"rarity":"premium","tags":["love","joy"]}]);
+// v0.15.92: Watsonia, the fifteenth African flower.
+types.push({id:"watsonia",name:"Ватсония",trait:"нежность рассвета",price:9,buy:5,rarity:"common",tags:["hope","joy"]});
+const palettes={"calla":["#f7f5df","#ffffff","#e0c76a"],"agapanthusWhite":["#fcfcf5","#eef3de","#d7ce9d"],"rose":["#e06f9c","#ffbdce","#833b5c"],"tulip":["#f07d2d","#326baf","#c9a04f"],"sun":["#efa32e","#ffe08a","#8b5531"],"daisy":["#9977c6","#e4ccfa","#d0a04e"],"lav":["#5b99c4","#d3e9f4","#4a6284"],"white":["#eb8042","#ffd0aa","#a44b33"],"peony":["#f58449","#ffcc83","#b55b36"],"iris":["#ef63a6","#ffbddb","#a65482"],"lily":["#e74439","#efc951","#9e4b39"],"hydra":["#f46748","#ffb055","#9a5133"],"carnation":["#e9673b","#ffcb4f","#ad562a"],"ranunc":["#ec7a94","#ffdb91","#c27a6a"]};
+function petalRing(count,cx,cy,rx,ry,colors,rot=0,stroke='rgba(120,80,80,.12)'){
+ return Array.from({leng
+\n### let types= count 0
+\n### var types= count 0
+\n### function flowerArt( count 1
+\nLINE 1 'function')renderMarket();
+ if(typeof render==='function')render();
+}
+function flowerArt(f){
+ const flowerAsset=ftzUseNewFlowers?FTZ_NEW_FLOWER_IMAGES[f.id]:approvedFlowerImages[f.id];
+ if(flowerAsset) return `<svg class="floral-svg" viewBox="0 0 80 100" width="80" height="100" role="img" aria-label="${f.name}"><image href="${flowerAsset}" x="0" y="0" width="80" height="100" preserveAspectRatio="xMidYMid meet"/></svg>`;
+ const c=palettes[f.id];
+ const defs = `<defs><radialGradient id="g-${f.id}" cx="50%" cy="38%" r="70%"><stop offset="0%" stop-color="${c[2]||c[1]}"/><stop offset="100%" stop-color="${c[0]}"/></radialGradient></defs>`;
+ let body='';
+ if(f.id==='lav'){
+  body = `${defs}<path d="M40 98Q40 62 40 14" fill="none" stroke="#638a66" stroke-width="3"/><path d="M40 77Q19 59 16 74Q30 83 40 84M40 84Q59 63 64 76Q53 88 40 89" fill="#7aa67d" opacity=".9"/>` +
+   Array.from({length:10},(_,i)=>{const y=14+i*5; const left=i%2?33:47; const ang=i%2?-28:28; const fill=i<3?c[2]:i<7?c[1]:c[0]; return `<ellipse cx="${left}" cy="${y}" rx="6" ry="10" transform="rotate(${ang} ${left} ${y})" fill="${fill}" stroke="${c[0]}" stroke-width=".5"/>`;}).join('')+
+   `<circle cx="40" cy="10" r="4" fill="${c[1]}"/>`;
+ }
+ else if(f.id==='sun'){
+  body = `${defs}<path d="M40 97Q39 70 40 53" fill="none" stroke="#678f67" stroke-width="3"/><path d="M40 78Q17 53 16 74Q28 84 40 84M40 84Q64 57 66 74Q56 86 41 88" fill="#79a47a"/>` +
+  petalRing(18,40,42,8,22,[c[1],c[0],c[2]],0,'rgba(175,130,55,.16)')+`<circle cx="40" cy="43" r="18" fill="#6b4934"/><circle cx="40" cy="43" r="12" fill="#a8793f"/><circle cx="40" cy="43" r="6" fill="#d5ad61"/>`;
+ }
+ else if(f.id==='tulip'){
+  body = `${defs}<path d="M40 98Q39 74 40 59" fill="none" stroke="#648c67" stroke-width="3"/><path d="M40 80Q20 59 18 76Q29 86 40 87M40 86Q59 60 62 76Q53 87 40 89" fill="#7ca77f"/>`+
+  `<path d="M22 56Q17 41 22 22L31 33L40 16L49 33L58 22Q63 41 58 56Q50 64 40 66Q30 64 22 56" fill="url(#g-${f.id})" stroke="${c[0]}" stroke-width=".8"/><path d="M26 28Q32 39 40 56Q47 39 54 28Q50 60 40 63Q31 60 26 28" fill="${c[2]}" opacity=".7"/><path d="M31 33Q35 28 40 22Q45 28 49 33" fill="none" stroke="${c[1]}" stroke-width="2" stroke-linecap="round"/>`;
+ }
+ else if(f.id==='white'){
+  body = `${defs}<path d="M40 97Q39 72 40 54" fill="none" stroke="#648b67" stroke-width="3"/>`+
+  Array.from({length:8},(_,i)=>{let x=18+(i%3)*18+(i>5?9:0),y=25+Math.floor(i/3)*16; return `<line x1="40" y1="72" x2="${x}" y2="${y}" stroke="#7ba27e" stroke-width="1.5"/><circle cx="${x}" cy="${y}" r="8" fill="#ffffff" stroke="#d8cfd
+\n### function stockCount( count 1
+\nLINE 1 totalStock(){return Object.values(state.stock).reduce((a,b)=>a+b,0);}
+function stockCount(id){return state.stock[id]||0;}
+function reservedCount(id){return state.chosen.filter(x=>x===id).length;}
+function availableCount(id){return stockCount(id)-reservedCount(id);}
+function currentBuyPrice(id){const base=state.deals[id]||types.find(t=>t.id===id).buy;return Math.max(1,base-(state.upgrades.nursery?1:0));}
+/* Награда сезона дождей: скидка действует в сезоне солнца для ограниченного количества цветов. */
+function springSavingsPerFlower(id){
+ const reward=state.seasonRewards.spring;
+ if(seasonIndex()!==1||!reward||reward.remaining<=0)return 0;
+ return Math.min(reward.perFlower,Math.max(0,currentBuyPrice(id)-1));
+}
+function purchaseCost(id,qty){
+ const r=state.seasonRewards.spring;
+ const eligible=(seasonIndex()===1&&r)?Math.min(qty,r.remaining):0;
+ return currentBuyPrice(id)*qty-eligible*springSavingsPerFlower(id);
+}
+function seasonRewardMarketHtml(){
+ if(seasonIndex()===1&&state.seasonRewards.spring){
+  const r=state.seasonRewards.spring;
+  return `<div class="season-reward-banner"><span aria-hidden="true">${floristUiIcon('gift')}</span><div><b>Награда сезона дождей: скидка в сезон солнца</b><p>−${r.perFlower} ${r.perFlower===1?'монета':'монеты'} за цветок · осталось покупок со скидкой: <strong>${r.remaining} из ${r.limit}</strong>. Сэкономлено: ${r.saved} монет.</p></div></div>`;
+ }
+ if(seasonIndex()===2&&state.seasonRewards.summer){
+  const r=state.seasonRewards.summer;
+  return `<div class="season-reward-banner"><span aria-hidden="true">${floristUiIcon('medal')}</span><div><b>Награда сезона солнца: добрая репутация</b><p>${r.applied?'Начислено':'Будет начислено'} <strong>+${r.bonus} к репутации</strong> перед первым заказом сезона урожая. Бонус даётся один раз.</p></div></div>`;
+ }
+ return '';
+}
+function getNote(){const el=$('note');return noteOptions[el?el.value:'none'];}
+function getGreen(){const el=$('greenery');return greeneryOptions[el?el.value:'none'];}
+function getDecor(){const el=$('decor');return decorOptions[el?el.value:'none'];}
+function ftzDecorKeys(){return ['decor','decor2','decor3'].map(k=>$(k)?.value||'none').filter(k=>k!=='none'&&Object.prototype.hasOwnProperty.call(decorOptions,k));}
+function ftzDecorItems(){return ftzDecorKeys().map(k=>decorOptions[k]);}
+function ftzDecorPrice(){return ftzDecorItems().reduce((v,item)=>v+item.retail,0);}
+function ftzDecorWholesale(){return ftzDecorItems().reduce((v,item)=>v+item.wholesale,0);}
+function ftzDecorTags(){return ftzDecorItems().flatMap(item=>item.tags||[]);}
+func
+\n### function availableCount( count 1
+\nLINE 1 tion reservedCount(id){return state.chosen.filter(x=>x===id).length;}
+function availableCount(id){return stockCount(id)-reservedCount(id);}
+function currentBuyPrice(id){const base=state.deals[id]||types.find(t=>t.id===id).buy;return Math.max(1,base-(state.upgrades.nursery?1:0));}
+/* Награда сезона дождей: скидка действует в сезоне солнца для ограниченного количества цветов. */
+function springSavingsPerFlower(id){
+ const reward=state.seasonRewards.spring;
+ if(seasonIndex()!==1||!reward||reward.remaining<=0)return 0;
+ return Math.min(reward.perFlower,Math.max(0,currentBuyPrice(id)-1));
+}
+function purchaseCost(id,qty){
+ const r=state.seasonRewards.spring;
+ const eligible=(seasonIndex()===1&&r)?Math.min(qty,r.remaining):0;
+ return currentBuyPrice(id)*qty-eligible*springSavingsPerFlower(id);
+}
+function seasonRewardMarketHtml(){
+ if(seasonIndex()===1&&state.seasonRewards.spring){
+  const r=state.seasonRewards.spring;
+  return `<div class="season-reward-banner"><span aria-hidden="true">${floristUiIcon('gift')}</span><div><b>Награда сезона дождей: скидка в сезон солнца</b><p>−${r.perFlower} ${r.perFlower===1?'монета':'монеты'} за цветок · осталось покупок со скидкой: <strong>${r.remaining} из ${r.limit}</strong>. Сэкономлено: ${r.saved} монет.</p></div></div>`;
+ }
+ if(seasonIndex()===2&&state.seasonRewards.summer){
+  const r=state.seasonRewards.summer;
+  return `<div class="season-reward-banner"><span aria-hidden="true">${floristUiIcon('medal')}</span><div><b>Награда сезона солнца: добрая репутация</b><p>${r.applied?'Начислено':'Будет начислено'} <strong>+${r.bonus} к репутации</strong> перед первым заказом сезона урожая. Бонус даётся один раз.</p></div></div>`;
+ }
+ return '';
+}
+function getNote(){const el=$('note');return noteOptions[el?el.value:'none'];}
+function getGreen(){const el=$('greenery');return greeneryOptions[el?el.value:'none'];}
+function getDecor(){const el=$('decor');return decorOptions[el?el.value:'none'];}
+function ftzDecorKeys(){return ['decor','decor2','decor3'].map(k=>$(k)?.value||'none').filter(k=>k!=='none'&&Object.prototype.hasOwnProperty.call(decorOptions,k));}
+function ftzDecorItems(){return ftzDecorKeys().map(k=>decorOptions[k]);}
+function ftzDecorPrice(){return ftzDecorItems().reduce((v,item)=>v+item.retail,0);}
+function ftzDecorWholesale(){return ftzDecorItems().reduce((v,item)=>v+item.wholesale,0);}
+function ftzDecorTags(){return ftzDecorItems().flatMap(item=>item.tags||[]);}
+function ftzDecorHas(key){return ftzDecorKeys().includes(key);}
+function ftzSetDecorChoice(id){
+ const el=$(id);if(!el)return;
+ co
+\n### function nextDay( count 0
+\n### function completeOrder( count 0
+\n### function finishOrder( count 0
+\n### function finishDay( count 0
+\n### function renderUpgrades( count 1
+\nLINE 2 te.finished&&!state.last&&(typeof flowMax==='undefined'||flowMax<1);}
+function renderUpgrades(){
+ const grid=$('upgradeGrid');if(!grid)return;
+ const entries=Object.entries(upgradeDefs);
+ const owned=entries.filter(([k])=>state.upgrades[k]).length;
+ const notOwned=entries.filter(([k])=>!state.upgrades[k]);
+ const canBuyNow=upgradeBuyingAllowed();
+ const affordable=notOwned.filter(([key])=>upgradeIsUnlocked(key)&&state.money>=upgradeRequiredCash(key)).length;
+ const seasonUnlocked=notOwned.filter(([key])=>upgradeIsUnlocked(key)).length;
+ const seasonLocked=notOwned.length-seasonUnlocked;
+ const visible=entries.filter(([key])=>upgradeFilter==='all'||(upgradeFilter==='owned'?!!state.upgrades[key]:!state.upgrades[key]));
+ grid.innerHTML=visible.map(([key,up])=>{
+  const installed=!!state.upgrades[key];
+  const unlocked=upgradeIsUnlocked(key);
+  const deficit=Math.max(0,upgradeRequiredCash(key)-state.money);
+  const buyDisabled=installed||!unlocked||deficit>0||!canBuyNow;
+  const cta=installed?'✓ Установлено':!unlocked?'Откроется в день '+(up.unlockSeason*7+1):!canBuyNow?'Доступно утром':deficit>0?`Нужно ещё ${deficit} монет`:`Купить за ${up.cost}`;
+  const hint=installed?'Бонус уже действует':upgradeEconomyInfo(key);
+  return `<div class="upgradecard ${installed?'upgrade-installed':''} ${!unlocked?'upgrade-season-locked':''} ${!installed&&unlocked&&deficit===0&&canBuyNow?'upgrade-affordable':''}">
+   ${upgradeArt(key)}
+   <span class="status ${installed?'on':'off'}">${installed?'Установлено':!unlocked?'Позже':deficit===0?'Доступно':'Пока не хватает монет'}</span>
+   <span class="upgrade-season-badge">${UPGRADE_SEASON_LABELS[up.unlockSeason]} · с ${up.unlockSeason*7+1}-го дня</span>
+   <h4>${up.name}</h4><p>${up.desc}</p>
+   <div class="upgrade-card-benefit"><strong>${up.bonus}</strong><span>${hint}</span></div>
+   <div class="upgrade-price-row"><span>Стоимость</span><strong>${up.cost} <span class="coin-icon" role="img" aria-label="монета"></span></strong></div>
+   <button type="button" onclick="buyUpgrade('${key}')" ${buyDisabled?'disabled':''}>${cta}</button>
+  </div>`;
+ }).join('')||'<div class="upgrade-empty">Здесь пока нет улучшений. Выбери другой фильтр.</div>';
+ const roadmap=$('upgradeRoadmapTrack'),fill=$('upgradeRoadmapFill');
+ if(roadmap)roadmap.setAttribute('aria-valuenow',String(owned));
+ if(fill)fill.style.width=Math.round(owned/entries.length*100)+'%';
+ if($('upgradeRoadmapLabel'))$('upgradeRoadmapLabel').textContent=`${owned} из ${entries.length} улучшений · ${UPGRADE_SEASON_LABELS[seasonIndex()]}`;
+ const lvl=sho
+\n### function renderShop( count 0
+\n### function renderFlowers( count 0
+\n### function current( count 1
+\nLINE 1 }
+};
+function specialEvent(){return SPECIAL_EVENTS[state.day]||null;}
+function current(){
+ const base=stories[state.day]||stories[stories.length-1];
+ const s={...base,wants:[...base.wants],avoid:[...base.avoid]};
+ if(isVipDay()){
+  s.vip=true;s.budget+=18;
+  s.detail='Особый заказ · '+base.detail;
+  s.occasion='VIP · '+base.occasion;
+  s.hint='VIP-клиент особенно ценит точность. '+base.hint;
+ }
+  const event=specialEvent();
+  if(event){s.budget+=event.budget;s.occasion=event.title+' · '+s.occasion;s.detail=event.detail+' '+s.detail;s.hint=event.title+': оценка от '+event.required+'% принесёт дополнительно '+event.bonus+' монет и '+event.rep+' репутации. '+s.hint;if(state.day===18)s.vip=true;}
+ return s;
+}
+
+function detailText(s){
+ const raw=(s&&s.detail?s.detail:'эта история мне очень важна').trim();
+ return raw.charAt(0).toLowerCase()+raw.slice(1);
+}
+const PERSONAL_REACTIONS={ "Амина":{delight:`«Сестра почувствовала в этом букете всю мою надежду на примирение.»`,warm:`«Сестра почувствовала в этом букете всю мою надежду на примирение.»`,mixed:`«Спасибо за букет. Он поможет передать мои чувства.»`,low:`«Хотелось бы немного другого настроения, но спасибо за старание.»`},
+ "Джума":{delight:`«Теперь я смогу признаться ей так, как и хотел: искренне.»`,warm:`«Теперь я смогу признаться ей так, как и хотел: искренне.»`,mixed:`«Спасибо за букет. Он поможет передать мои чувства.»`,low:`«Хотелось бы немного другого настроения, но спасибо за старание.»`},
+ "Зури":{delight:`«Эти цветы напомнят подруге, что смелость открывает новые двери.»`,warm:`«Эти цветы напомнят подруге, что смелость открывает новые двери.»`,mixed:`«Спасибо за букет. Он поможет передать мои чувства.»`,low:`«Хотелось бы немного другого настроения, но спасибо за старание.»`},
+ "Омари":{delight:`«Именно такой букет хочется подарить, когда слова не нужны.»`,warm:`«Именно такой букет хочется подарить, когда слова не нужны.»`,mixed:`«Спасибо за букет. Он поможет передать мои чувства.»`,low:`«Хотелось бы немного другого настроения, но спасибо за старание.»`},
+ "Ния":{delight:`«Я смогу спокойно попросить прощения и показать свою любовь.»`,warm:`«Я смогу спокойно попросить прощения и показать свою любовь.»`,mixed:`«Спасибо за букет. Он поможет передать мои чувства.»`,low:`«Хотелось бы немного другого настроения, но спасибо за старание.»`},
+ "Барака":{delight:`«Настоящий букет победы — спасибо!»`,warm:`«Настоящий букет победы — спасибо!»`,mixed:`«Спасибо за букет. Он поможет передать мои чувства.»`,low:`«Хотелось бы немного другого настроения, но спасибо за старание.»`},
+ "Аша"
+\n### function currentBuyPrice( count 1
+\nLINE 1 function availableCount(id){return stockCount(id)-reservedCount(id);}
+function currentBuyPrice(id){const base=state.deals[id]||types.find(t=>t.id===id).buy;return Math.max(1,base-(state.upgrades.nursery?1:0));}
+/* Награда сезона дождей: скидка действует в сезоне солнца для ограниченного количества цветов. */
+function springSavingsPerFlower(id){
+ const reward=state.seasonRewards.spring;
+ if(seasonIndex()!==1||!reward||reward.remaining<=0)return 0;
+ return Math.min(reward.perFlower,Math.max(0,currentBuyPrice(id)-1));
+}
+function purchaseCost(id,qty){
+ const r=state.seasonRewards.spring;
+ const eligible=(seasonIndex()===1&&r)?Math.min(qty,r.remaining):0;
+ return currentBuyPrice(id)*qty-eligible*springSavingsPerFlower(id);
+}
+function seasonRewardMarketHtml(){
+ if(seasonIndex()===1&&state.seasonRewards.spring){
+  const r=state.seasonRewards.spring;
+  return `<div class="season-reward-banner"><span aria-hidden="true">${floristUiIcon('gift')}</span><div><b>Награда сезона дождей: скидка в сезон солнца</b><p>−${r.perFlower} ${r.perFlower===1?'монета':'монеты'} за цветок · осталось покупок со скидкой: <strong>${r.remaining} из ${r.limit}</strong>. Сэкономлено: ${r.saved} монет.</p></div></div>`;
+ }
+ if(seasonIndex()===2&&state.seasonRewards.summer){
+  const r=state.seasonRewards.summer;
+  return `<div class="season-reward-banner"><span aria-hidden="true">${floristUiIcon('medal')}</span><div><b>Награда сезона солнца: добрая репутация</b><p>${r.applied?'Начислено':'Будет начислено'} <strong>+${r.bonus} к репутации</strong> перед первым заказом сезона урожая. Бонус даётся один раз.</p></div></div>`;
+ }
+ return '';
+}
+function getNote(){const el=$('note');return noteOptions[el?el.value:'none'];}
+function getGreen(){const el=$('greenery');return greeneryOptions[el?el.value:'none'];}
+function getDecor(){const el=$('decor');return decorOptions[el?el.value:'none'];}
+function ftzDecorKeys(){return ['decor','decor2','decor3'].map(k=>$(k)?.value||'none').filter(k=>k!=='none'&&Object.prototype.hasOwnProperty.call(decorOptions,k));}
+function ftzDecorItems(){return ftzDecorKeys().map(k=>decorOptions[k]);}
+function ftzDecorPrice(){return ftzDecorItems().reduce((v,item)=>v+item.retail,0);}
+function ftzDecorWholesale(){return ftzDecorItems().reduce((v,item)=>v+item.wholesale,0);}
+function ftzDecorTags(){return ftzDecorItems().flatMap(item=>item.tags||[]);}
+function ftzDecorHas(key){return ftzDecorKeys().includes(key);}
+function ftzSetDecorChoice(id){
+ const el=$(id);if(!el)return;
+ const key=el.value;
+ if(key!=='none'&&['decor','decor2','decor3'].some(o
+\n### function buyStem( count 1
+\nLINE 2 assortment=Object.values(state.availability).filter(Boolean).length;}
+function buyStem(id,qty){
+ if(state.last||(typeof flowMax!=='undefined'&&flowMax>=1)||!Number.isInteger(qty)||qty<1)return;
+ const flower=types.find(t=>t.id===id);
+ if(!flower||!state.availability[id]){marketMessage('Сегодня этот цветок на рынке недоступен.');return;}
+ const cost=purchaseCost(id,qty);
+ if(state.money<cost){marketMessage('Недостаточно монет для этой закупки.');return;}
+ const spring=state.seasonRewards.spring;
+ const discountPerFlower=springSavingsPerFlower(id);
+ const discounted=seasonIndex()===1&&spring?Math.min(qty,spring.remaining):0;
+ const saved=discounted*discountPerFlower;
+ const unitCost=currentBuyPrice(id);
+ if(!state.stockCosts[id])state.stockCosts[id]=[];
+ if(!state.flowerLots[id])state.flowerLots[id]=[];
+ for(let i=0;i<qty;i++){
+  const paid=unitCost-(i<discounted?discountPerFlower:0);
+  state.stockCosts[id].push(paid);
+  state.flowerLots[id].push({boughtDay:state.day,cost:paid});
+ }
+ state.money-=cost;
+ state.stock[id]+=qty;
+ state.marketSpent+=cost;
+ if(discounted){spring.remaining-=discounted;spring.saved+=saved;}
+ clearMarketBalancePreview();
+ marketMessage(`Куплено: ${flower.name} × ${qty}.${saved?' Награда сезона дождей: сэкономлено '+saved+' монет.':''} ${currentSeason().note}`);
+ render();
+}
+function buyUpgrade(key){if(state.last||(typeof flowMax!=='undefined'&&flowMax>=1))return;const up=upgradeDefs[key]; if(!up)return; if(state.upgrades[key]){setUpgradeNote('Это улучшение уже установлено.'); return;} if(!upgradeIsUnlocked(key)){setUpgradeNote(upgradeEconomyInfo(key));return;} if(state.money<upgradeRequiredCash(key)){setUpgradeNote('Недостаточно монет: после покупки необходимо оставить '+upgradeReserve()+' монет на цветы. '+upgradeEconomyInfo(key)+'.');return;} state.money-=up.cost; state.upgrades[key]=true; newlyInstalledUpgrade=key; state.upgradePurchases.push({day:state.day+1,key,cost:up.cost}); setUpgradeNote(`Установлено улучшение: ${up.name}. ${up.bonus}.`); render();}
+let tzNewBloomIndex=-1;
+function choose(id){if(state.last||state.finished||flowStep!==1)return; if(state.chosen.length>=maxFlowers()){marketMessage(`Сейчас можно использовать до ${maxFlowers()} цветов.`); return;} if(availableCount(id)<=0){marketMessage('Свободных цветов этого вида на складе не осталось.'); return;} const flower=types.find(f=>f.id===id);
+if(price()+flower.price>budgetLimit()){
+  marketMessage('Нельзя добавить '+flower.name+': бюджет клиента '+budgetLimit()+' монет. Осталось '+Math.max(0,budgetLimit()-price())+' '+coinWordCount(Math
+\n### function consume count 0
+\n### function updateShopVisual( count 1
+\nLINE 2 и цветы: здесь появится прогноз прибыли без чаевых и VIP-бонусов.';
+}
+function updateShopVisual(){
+ const level=shopLevel();
+ const before=shopBeforeComparison;
+ for(const id of ['shopVisual','shopVisualLarge']){
+  const el=$(id);if(!el)continue;
+  const previewBefore=before&&id==='shopVisualLarge';
+  if(!el.dataset.artReady){
+   el.querySelectorAll('.js-shop-asset').forEach(img=>{const src=visualAssets[img.dataset.art];if(src)img.src=src;});
+   el.dataset.artReady='yes';
+  }
+  // The comparison is only visual; money, real upgrades, bonuses and current level stay untouched.
+  for(const key of ['fridge','showcase','premiumPack','assistant','nursery','atelier','courier','promotion']){
+   el.classList.toggle('has-'+key,!previewBefore&&!!state.upgrades[key]);
+   el.classList.remove('just-installed-'+key);
+  }
+  el.classList.toggle('is-salon',!previewBefore&&level.id==='salon');
+  el.classList.toggle('is-studio',!previewBefore&&level.id==='studio');
+  el.classList.toggle('is-comparing-before',previewBefore);
+  if(!previewBefore&&newlyInstalledUpgrade){
+    el.classList.add('just-installed-'+newlyInstalledUpgrade);
+  }
+  const previousLevel=el.dataset.displayLevel;
+  const displayedLevel=previewBefore?'shop':level.id;
+  if(previousLevel&&previousLevel!==displayedLevel&&!previewBefore){
+    el.classList.remove('shop-level-reveal');
+    void el.offsetWidth;
+    el.classList.add('shop-level-reveal');
+  }
+  el.dataset.displayLevel=displayedLevel;
+  const installedNames=Object.keys(upgradeDefs).filter(key=>state.upgrades[key]).map(key=>upgradeDefs[key].name);
+  const ariaDetail=installedNames.length?' Установлены: '+installedNames.join(', ')+'.':' Улучшения пока не установлены.';
+  el.setAttribute('aria-label',previewBefore?'Исходный вид лавки до улучшений.':level.name+'. '+upgradeCount()+' из 8 улучшений.'+ariaDetail);
+ }
+ newlyInstalledUpgrade=null;
+ if($('shopVisualLevel'))$('shopVisualLevel').textContent=level.name;
+ if($('shopVisualLevelLarge'))$('shopVisualLevelLarge').textContent=before?'До улучшений':level.name;
+ if($('shopPageLevel'))$('shopPageLevel').textContent=level.name;
+ if($('shopPageUpgrades'))$('shopPageUpgrades').textContent=upgradeCount()+' из 8';
+ if($('shopPageRep'))$('shopPageRep').textContent=state.rep;
+ const compareBtn=$('shopCompareButton');
+ if(compareBtn){compareBtn.textContent=before?'Показать «после»':'Показать «до»';compareBtn.setAttribute('aria-pressed',String(before));}
+ if($('shopUnlockList'))$('shopUnlockList').innerHTML=Object.entries(upgradeDefs).map(([key,up])=>`<div class="shop-unlock ${state.upg
+\n### function ftzLoadProgress( count 1
+\nLINE 2 ;
+  console.warn('Флорист Танзания: сохранение недоступно',err);
+ }
+}
+function ftzLoadProgress(){
+ let p;
+ try{p=JSON.parse(localStorage.getItem(FTZ_SAVE_KEY)||'null');}
+ catch(e){ftzSaveBlocked=true;return false;}
+ if(!p||p.version!==FTZ_SAVE_VERSION||!p.state||!p.state.started)return false;
+ if(!Number.isInteger(p.state.day)||p.state.day<0||p.state.day>=CAMPAIGN_DAYS)return false;
+ if(!Array.isArray(p.state.history)||p.state.history.length>CAMPAIGN_DAYS)return false;
+ try{
+  // Unknown data properties cannot override code or any of the game's functions.
+  for(const key of Object.keys(state)){
+   if(key in p.state&&key!=='snapshotBouquetMarkup')state[key]=p.state[key];
+  }
+  state.snapshotBouquetMarkup='';
+  flowStep=Math.max(0,Math.min(2,Number(p.flowStep)||0));
+  flowMax=Math.max(flowStep,Math.max(0,Math.min(2,Number(p.flowMax)||0)));
+  ftzRestorePayload=p;
+  return true;
+ }catch(e){console.warn('Некорректное сохранение',e);return false;}
+}
+function ftzRestoreExtras(extras){
+ if(!extras)return;
+ for(const key of FTZ_SAVE_EXTRAS){
+  const el=$(key),value=extras[key];
+  if(!el)continue;
+  if(typeof value!=='string'){if(key==='decor2'||key==='decor3')el.value='none';continue;}
+  if(Array.from(el.options).some(o=>o.value===value))el.value=value;
+  else if(key==='decor'||key==='decor2'||key==='decor3')el.value='none';
+ }
+ syncExtras();
+}
+function ftzRebuildBouquet(spec){
+ if(!spec||!Array.isArray(spec.chosen))return '';
+ const originalChosen=state.chosen,originalPositions=state.positions,originalAccessories=state.accessoryPositions,originalExtras=ftzStoredExtras();
+ const oldDecor=spec.extras?.decor;
+ const decorSelect=$('decor');
+ let temporaryHistoryOption=null;
+ if(decorSelect&&oldDecor&&decorOptions[oldDecor]&&!Array.from(decorSelect.options).some(o=>o.value===oldDecor)){
+  temporaryHistoryOption=document.createElement('option');
+  temporaryHistoryOption.value=oldDecor;
+  temporaryHistoryOption.textContent=decorOptions[oldDecor].name;
+  temporaryHistoryOption.hidden=true;
+  temporaryHistoryOption.disabled=true;
+  decorSelect.appendChild(temporaryHistoryOption);
+ }
+ let markup='';
+ try{
+  state.chosen=spec.chosen.slice();
+  state.positions=Array.isArray(spec.positions)?spec.positions.map(p=>p?{...p}:null):[];
+  state.accessoryPositions=spec.accessoryPositions||{basket:{},bouquet:{}};
+  ftzRestoreExtras(spec.extras);
+  markup=renderBouquet();
+ }catch(e){console.warn('Не удалось восстановить изображение букета',e);}
+ finally{
+  state.chosen=originalChosen;
+  state.positions=originalPositions;
+  state.accessoryPositions=origin
+\n### function ftzSaveNow( count 1
+\nLINE 2 earTimeout(ftzSaveTimer);
+ ftzSaveTimer=setTimeout(ftzSaveNow,180);
+}
+function ftzSaveNow(){
+ if(ftzSaveTimer){clearTimeout(ftzSaveTimer);ftzSaveTimer=null;}
+ if(ftzSuppressSave||!state.started)return;
+ try{
+  // Snapshot markup contains inline artwork and could exceed the browser quota.
+  const compactHistory=state.history.map(h=>{
+   const {bouquetMarkup,...small}=h;return small;
+  });
+  const compactState={...state,history:compactHistory,snapshotBouquetMarkup:''};
+  const payload={version:FTZ_SAVE_VERSION,at:Date.now(),state:compactState,
+    flowStep,flowMax,extras:ftzStoredExtras()};
+  localStorage.setItem(FTZ_SAVE_KEY,JSON.stringify(payload));
+  ftzSaveBlocked=false;
+  const indicator=document.getElementById('ftzSaveNotice');
+  if(indicator)indicator.textContent='✓ Прогресс сохраняется автоматически';
+ }catch(err){
+  ftzSaveBlocked=true;
+  const indicator=document.getElementById('ftzSaveNotice');
+  if(indicator)indicator.textContent='Не удалось сохранить прогресс в этом браузере';
+  console.warn('Флорист Танзания: сохранение недоступно',err);
+ }
+}
+function ftzLoadProgress(){
+ let p;
+ try{p=JSON.parse(localStorage.getItem(FTZ_SAVE_KEY)||'null');}
+ catch(e){ftzSaveBlocked=true;return false;}
+ if(!p||p.version!==FTZ_SAVE_VERSION||!p.state||!p.state.started)return false;
+ if(!Number.isInteger(p.state.day)||p.state.day<0||p.state.day>=CAMPAIGN_DAYS)return false;
+ if(!Array.isArray(p.state.history)||p.state.history.length>CAMPAIGN_DAYS)return false;
+ try{
+  // Unknown data properties cannot override code or any of the game's functions.
+  for(const key of Object.keys(state)){
+   if(key in p.state&&key!=='snapshotBouquetMarkup')state[key]=p.state[key];
+  }
+  state.snapshotBouquetMarkup='';
+  flowStep=Math.max(0,Math.min(2,Number(p.flowStep)||0));
+  flowMax=Math.max(flowStep,Math.max(0,Math.min(2,Number(p.flowMax)||0)));
+  ftzRestorePayload=p;
+  return true;
+ }catch(e){console.warn('Некорректное сохранение',e);return false;}
+}
+function ftzRestoreExtras(extras){
+ if(!extras)return;
+ for(const key of FTZ_SAVE_EXTRAS){
+  const el=$(key),value=extras[key];
+  if(!el)continue;
+  if(typeof value!=='string'){if(key==='decor2'||key==='decor3')el.value='none';continue;}
+  if(Array.from(el.options).some(o=>o.value===value))el.value=value;
+  else if(key==='decor'||key==='decor2'||key==='decor3')el.value='none';
+ }
+ syncExtras();
+}
+function ftzRebuildBouquet(spec){
+ if(!spec||!Array.isArray(spec.chosen))return '';
+ const originalChosen=state.chosen,originalPositions=state.positions,originalAccessories=state.accessoryPositions,originalExtras
+\n### function render(){ count 1
+\nLINE 2 ice?'+'+current.price+' монет':'бесплатно'}`:'Выберите упаковку';
+}
+
+ function render(){if(state.finished)return; ftzRefreshOrderBrief(); if($('totalSpeciesChip'))$('totalSpeciesChip').textContent=`${types.length} африканских цветов`; renderForecast(); updateSeasonAppearance(); updateShopVisual(); refreshSelectLocks(); updateOptionPreviews();
+ const inBasket=ftzIsBasket();
+ ftzRenderWrapChoices();
+ ftzRefreshWrapDisclosure();
+ ftzHarmonyUpdateButton();
+ if($('ftzFormatBouquet')){$('ftzFormatBouquet').classList.toggle('ftz-selected',!inBasket);$('ftzFormatBouquet').setAttribute('aria-pressed',String(!inBasket));$('ftzFormatBouquet').disabled=!!state.last;}
+ if($('ftzFormatBasket')){$('ftzFormatBasket').classList.toggle('ftz-selected',inBasket);$('ftzFormatBasket').setAttribute('aria-pressed',String(inBasket));$('ftzFormatBasket').disabled=!!state.last;}
+  const basketPalettePicker=$('ftzBasketPalettePicker');
+  if(basketPalettePicker){
+    basketPalettePicker.hidden=!inBasket;
+    const chosenPalette=ftzBasketColor();
+    basketPalettePicker.querySelectorAll('[data-basket-color]').forEach(btn=>{
+      const selected=btn.dataset.basketColor===chosenPalette;
+      btn.setAttribute('aria-pressed',String(selected));
+      btn.disabled=!!state.last||!!state.finished;
+    });
+  }
+ if($('ftzWrapControl'))$('ftzWrapControl').classList.toggle('hidden',inBasket);
+ if($('ftzFormatCaption'))$('ftzFormatCaption').textContent=inBasket?'Плетёная корзина стоит 7 монет (затраты лавки — 4) в любом цвете. Цветы, зелень и украшения можно выбирать свободно.':'Выберите бумагу или ткань для букета. Цветы и декор доступны в обоих форматах.';
+ const s=current(), lvl=shopLevel(), season=currentSeason(); $('day').textContent=state.day+1; $('money').textContent=state.money; $('rep').textContent=state.rep; $('seasonPill').textContent=season.name; $('shopLevelPill').textContent=lvl.short; $('levelName').textContent=lvl.name; $('seasonName').textContent=season.name; $('vipToday').textContent=s.vip?'VIP-заказ':'Обычный заказ'; $('upgradeCount').textContent=`${upgradeCount()} / 8`; $('customerName').innerHTML=s.name + (s.vip?'<span class="vipchip">VIP</span>':''); const clientAvatar=$('avatar'); if(clientAvatar && clientAvatar.dataset.portraitDay!==String(state.day)){clientAvatar.classList.add('has-portrait');clientAvatar.innerHTML='<img src="'+CLIENT_PORTRAITS[state.day]+'" alt="Портрет клиента '+s.name+'" decoding="async">';clientAvatar.dataset.portraitDay=String(state.day);} $('occasion').textContent=s.occasion; $('customerDetail').textContent=s.detail; $
+\n### function reset count 2
+\nLINE 2 а, диагональ, каскад':`Вариант ${i+1}/3 — ${FTZ_HARMONY_NAMES[i]}`;
+}
+function resetBouquetArrangement(){
+ if(state.last||state.finished||!state.chosen.length)return;
+ const previous=Number.isInteger(state.harmonyVariant)?state.harmonyVariant:-1;
+ const next=(previous+1)%3;
+ state.positions=ftzHarmonyPositions(next);
+ state.harmonyVariant=next;
+ render();
+ ftzQueueSave();
+}
+
+const bouquetHeadImages={"calla":"data:image/webp;base64,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
+\nLINE 2 et tzTraining={counts:[0,0,0,0],wrap:null,decor:null,complete:false};
+function resetTzTraining(){tzTraining={counts:[0,0,0,0],wrap:null,decor:null,complete:false};renderTzTraining();}
+function tzPracticeAdjust(i,d){tzTraining.counts[i]=Math.max(0,Math.min(8,tzTraining.counts[i]+d));renderTzTraining();}
+function tzPracticeChoose(type,value){tzTraining[type]=value;renderTzTraining();}
+function renderTzTraining(){
+ const host=document.getElementById('tzPractice');if(!host)return;
+ const n=tzTraining.counts.reduce((a,b)=>a+b,0),types=tzTraining.counts.filter(x=>x>0).length;
+ const flowersCost=tzTraining.counts.reduce((sum,num,i)=>sum+num*tzTrainingFlowers[i].price,0);
+ const wrapCost=tzTraining.wrap==='savanna'?5:tzTraining.wrap==='zanzibar'?7:0;
+ const decorCost=tzTraining.decor==='card'?3:tzTraining.decor==='ribbon'?4:0;
+ const total=flowersCost+wrapCost+decorCost,over=total>62;
+ const completed=n>=4&&types>=2&&!!tzTraining.wrap&&!!tzTraining.decor&&!over;
+ tzTraining.complete=completed;
+ let message=over?'Бюджет превышен: убери цветок или выбери более доступное оформление.':n<4?'Добавь не менее четырёх цветов.':types<2?'Добавь цветок другого вида для разнообразия.':!tzTraining.wrap?'Выбери африканскую упаковку.':!tzTraining.decor?'Добавь украшение.':'Отлично! Букет готов, пожелания выполнены, бюджет соблюдён.';
+ const buttons=tzTrainingFlowers.map((f,i)=>'<div class="tz-practice-flower"><div class="tz-practice-name"><img class="tz-practice-thumb" src="'+approvedFlowerImages[f.id]+'" alt=""> <b>'+f.name+'</b><small>'+f.price+' монет/шт.</small></div><div class="tz-practice-adjust"><button type="button" aria-label="Убрать '+f.name+'" onclick="tzPracticeAdjust('+i+',-1)">−</button><span>'+tzTraining.counts[i]+'</span><button type="button" aria-label="Добавить '+f.name+'" onclick="tzPracticeAdjust('+i+',1)">+</button></div></div>').join('');
+ const opt=(kind,value,label)=>'<button type="button" class="'+(tzTraining[kind]===value?'chosen':'')+'" aria-pressed="'+(tzTraining[kind]===value)+'" onclick="tzPracticeChoose(&quot;'+kind+'&quot;,&quot;'+value+'&quot;)">'+label+'</button>';
+ const selected=tzTrainingFlowers.flatMap((f,i)=>Array(tzTraining.counts[i]).fill(f));
+ const positions=[[50,20,-3],[36,28,-12],[64,28,12],[46,37,-5],[57,38,9],[29,40,-15],[71,40,15],[49,12,0],[37,16,-9],[62,17,10],[24,30,-18],[76,30,18]];
+ const stems=selected.map((f,i)=>{const [x,y]=positions[i%positions.length];return '<path d="M '+x+' '+(y+12)+' Q 50 66 50 86" stroke="#547944" stroke-width="1.8" stroke-linecap="round" fill="none" opacity=".8"/>';}).j
+\n### state.upgrades.nursery count 1
+\nLINE 1 state.deals[id]||types.find(t=>t.id===id).buy;return Math.max(1,base-(state.upgrades.nursery?1:0));}
+/* Награда сезона дождей: скидка действует в сезоне солнца для ограниченного количества цветов. */
+function springSavingsPerFlower(id){
+ const reward=state.seasonRewards.spring;
+ if(seasonIndex()!==1||!reward||reward.remaining<=0)return 0;
+ return Math.min(reward.perFlower,Math.max(0,currentBuyPrice(id)-1));
+}
+function purchaseCost(id,qty){
+ const r=state.seasonRewards.spring;
+ const eligible=(seasonIndex()===1&&r)?Math.min(qty,r.remaining):0;
+ return currentBuyPrice(id)*qty-eligible*springSavingsPerFlower(id);
+}
+function seasonRewardMarketHtml(){
+ if(seasonIndex()===1&&state.seasonRewards.spring){
+  const r=state.seasonRewards.spring;
+  return `<div class="season-reward-banner"><span aria-hidden="true">${floristUiIcon('gift')}</span><div><b>Награда сезона дождей: скидка в сезон солнца</b><p>−${r.perFlower} ${r.perFlower===1?'монета':'монеты'} за цветок · осталось покупок со скидкой: <strong>${r.remaining} из ${r.limit}</strong>. Сэкономлено: ${r.saved} монет.</p></div></div>`;
+ }
+ if(seasonIndex()===2&&state.seasonRewards.summer){
+  const r=state.seasonRewards.summer;
+  return `<div class="season-reward-banner"><span aria-hidden="true">${floristUiIcon('medal')}</span><div><b>Награда сезона солнца: добрая репутация</b><p>${r.applied?'Начислено':'Будет начислено'} <strong>+${r.bonus} к репутации</strong> перед первым заказом сезона урожая. Бонус даётся один раз.</p></div></div>`;
+ }
+ return '';
+}
+function getNote(){const el=$('note');return noteOptions[el?el.value:'none'];}
+function getGreen(){const el=$('greenery');return greeneryOptions[el?el.value:'none'];}
+function getDecor(){const el=$('decor');return decorOptions[el?el.value:'none'];}
+function ftzDecorKeys(){return ['decor','decor2','decor3'].map(k=>$(k)?.value||'none').filter(k=>k!=='none'&&Object.prototype.hasOwnProperty.call(decorOptions,k));}
+function ftzDecorItems(){return ftzDecorKeys().map(k=>decorOptions[k]);}
+function ftzDecorPrice(){return ftzDecorItems().reduce((v,item)=>v+item.retail,0);}
+function ftzDecorWholesale(){return ftzDecorItems().reduce((v,item)=>v+item.wholesale,0);}
+function ftzDecorTags(){return ftzDecorItems().flatMap(item=>item.tags||[]);}
+function ftzDecorHas(key){return ftzDecorKeys().includes(key);}
+function ftzSetDecorChoice(id){
+ const el=$(id);if(!el)return;
+ const key=el.value;
+ if(key!=='none'&&['decor','decor2','decor3'].some(other=>other!==id&&$(other)?.value===key)){
+   el.value=previousExtras[id]||'none';
+   marketMessage('Это украш
+\n### const upgradeDefs= count 1
+\nLINE 1 ика v0.15.15: 3 улучшения сезона дождей / 3 — солнца / 2 — урожая. */
+const upgradeDefs={
+fridge:{name:'Охлаждаемый павильон',cost:165,unlockSeason:0,desc:'Продлевает срок хранения каждой партии цветов на один игровой день, включая уже купленные.',bonus:'Свежесть +1 день'},
+showcase:{name:'Этно-витрина',cost:195,unlockSeason:0,desc:'Привлекает больше внимания к магазину «Танзания» и повышает шанс VIP-заказа.',bonus:'VIP-поток + репутация'},
+premiumPack:{name:'Африканская упаковка',cost:215,unlockSeason:1,desc:'Открывает эксклюзивные материалы, традиционные орнаменты и роскошное оформление букетов. Повышает впечатление от дорогих заказов.',bonus:'Открывает шёлковую упаковку'},
+assistant:{name:'Флорист из Танзании',cost:285,unlockSeason:1,desc:'Помогает собирать более сложные букеты и слегка экономит закупки.',bonus:'+2 цветка (до 10) и +5 баллов к оценке'},
+nursery:{name:'Питомник редких цветов',cost:210,unlockSeason:0,desc:'Собственные посадки позволяют закупать цветы на рынке дешевле.',bonus:'−1 монета за каждый цветок на рынке'},
+atelier:{name:'Мастерская записок',cost:145,unlockSeason:1,desc:'Авторские открытки помогают точнее передавать чувства клиентов.',bonus:'+5 баллов к оценке букета с запиской'},
+courier:{name:'Сафари-доставка',cost:235,unlockSeason:1,desc:'Аккуратная доставка приносит дополнительные чаевые за удачный заказ.',bonus:'+12 монет при оценке от 65%'},
+promotion:{name:'Африканская афиша',cost:225,unlockSeason:1,desc:'Вывеска и реклама помогают привлекать новых клиентов.',bonus:'+2 репутации и +10 монет при оценке от 75%'}
+};
+const UPGRADE_SEASON_LABELS=['Сезон дождей','Сезон солнца','Сезон урожая'];
+const UPGRADE_WORKING_RESERVE=[48,48,48];
+function upgradeReserve(){return UPGRADE_WORKING_RESERVE[seasonIndex()];}
+function upgradeIsUnlocked(key){return seasonIndex()>=(upgradeDefs[key]?.unlockSeason??0);}
+function upgradeRequiredCash(key){return upgradeDefs[key].cost+upgradeReserve();}
+function upgradeEconomyInfo(key){
+ const item=upgradeDefs[key];
+ if(!item)return 'Неизвестное улучшение';
+ if(!upgradeIsUnlocked(key))return 'Откроется в сезоне «'+UPGRADE_SEASON_LABELS[item.unlockSeason]+'» (день '+(item.unlockSeason*7+1)+')';
+ if(state.money<upgradeRequiredCash(key))return 'Для покупки и резерва на цветы нужно ещё '+(upgradeRequiredCash(key)-state.money)+' '+coinWord(upgradeRequiredCash(key)-state.money);
+ return 'Можно купить и сохранить '+upgradeReserve()+' '+coinWord(upgradeReserve())+' на закупку цветов';
+}
+const col={kraft:'#d4a994',linen:'#e7d6bc',velvet:'#a46e7a',signature:'#8ea2c8'};
+const state={da
+\n### function ftzQueueSave( count 1
+\nLINE 2 ey=>{const el=$(key);if(el)extras[key]=el.value;});
+ return extras;
+}
+function ftzQueueSave(){
+ if(ftzSuppressSave||!state.started)return;
+ if(ftzSaveTimer)clearTimeout(ftzSaveTimer);
+ ftzSaveTimer=setTimeout(ftzSaveNow,180);
+}
+function ftzSaveNow(){
+ if(ftzSaveTimer){clearTimeout(ftzSaveTimer);ftzSaveTimer=null;}
+ if(ftzSuppressSave||!state.started)return;
+ try{
+  // Snapshot markup contains inline artwork and could exceed the browser quota.
+  const compactHistory=state.history.map(h=>{
+   const {bouquetMarkup,...small}=h;return small;
+  });
+  const compactState={...state,history:compactHistory,snapshotBouquetMarkup:''};
+  const payload={version:FTZ_SAVE_VERSION,at:Date.now(),state:compactState,
+    flowStep,flowMax,extras:ftzStoredExtras()};
+  localStorage.setItem(FTZ_SAVE_KEY,JSON.stringify(payload));
+  ftzSaveBlocked=false;
+  const indicator=document.getElementById('ftzSaveNotice');
+  if(indicator)indicator.textContent='✓ Прогресс сохраняется автоматически';
+ }catch(err){
+  ftzSaveBlocked=true;
+  const indicator=document.getElementById('ftzSaveNotice');
+  if(indicator)indicator.textContent='Не удалось сохранить прогресс в этом браузере';
+  console.warn('Флорист Танзания: сохранение недоступно',err);
+ }
+}
+function ftzLoadProgress(){
+ let p;
+ try{p=JSON.parse(localStorage.getItem(FTZ_SAVE_KEY)||'null');}
+ catch(e){ftzSaveBlocked=true;return false;}
+ if(!p||p.version!==FTZ_SAVE_VERSION||!p.state||!p.state.started)return false;
+ if(!Number.isInteger(p.state.day)||p.state.day<0||p.state.day>=CAMPAIGN_DAYS)return false;
+ if(!Array.isArray(p.state.history)||p.state.history.length>CAMPAIGN_DAYS)return false;
+ try{
+  // Unknown data properties cannot override code or any of the game's functions.
+  for(const key of Object.keys(state)){
+   if(key in p.state&&key!=='snapshotBouquetMarkup')state[key]=p.state[key];
+  }
+  state.snapshotBouquetMarkup='';
+  flowStep=Math.max(0,Math.min(2,Number(p.flowStep)||0));
+  flowMax=Math.max(flowStep,Math.max(0,Math.min(2,Number(p.flowMax)||0)));
+  ftzRestorePayload=p;
+  return true;
+ }catch(e){console.warn('Некорректное сохранение',e);return false;}
+}
+function ftzRestoreExtras(extras){
+ if(!extras)return;
+ for(const key of FTZ_SAVE_EXTRAS){
+  const el=$(key),value=extras[key];
+  if(!el)continue;
+  if(typeof value!=='string'){if(key==='decor2'||key==='decor3')el.value='none';continue;}
+  if(Array.from(el.options).some(o=>o.value===value))el.value=value;
+  else if(key==='decor'||key==='decor2'||key==='decor3')el.value='none';
+ }
+ syncExtras();
+}
+function ftzRebuildBouquet(spec){
+ if(!spec||!Array.is
+\n### function chosen count 0
+\n### function flowerSvg( count 0
+\n### function flowerHead( count 0
+\n### function renderFlower count 0
+\n### function submit count 0
+\n### function handoff count 0
+\n### function complete count 0
+\n### function serve count 0
+\n### function endDay( count 0
