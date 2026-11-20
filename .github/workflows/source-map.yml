@@ -1,0 +1,32 @@
+name: Source map for integration
+on:
+  push:
+    branches: [feature/plantation-integration]
+    paths: [.github/workflows/source-map.yml]
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect JavaScript symbols
+        run: |
+          python3 - <<'PY'
+          import pathlib,re
+          s=pathlib.Path('index.html').read_text()
+          patterns=[r'(?:const|let|var)\\s+(?:FLOWERS|flowers|UPGRADES|upgrades|state|STORAGE_KEY|saveKey|FLOWER_DATA)\\b',r'function\\s+(?:render|renderShop|renderUpgrade|buyUpgrade|renderMarket|renderBouquet|renderFlowers|addFlower|chooseFlower|price|save|load|ftzQueueSave|buyFlower|plantFlower|nextDay|beginDay)\\b',r'(?:upgrade|nursery|shop|chosen|stock|saveGame)\\s*:',r'window\\.(?:render|state|FLOWERS|ftzQueueSave)\\s*=']
+          out=['# Symbol map','Total lines: '+str(s.count('\n')+1)]
+          for pat in patterns:
+            out.append('\n### '+pat)
+            for m in list(re.finditer(pat,s,re.I))[:35]:
+              lo=max(0,m.start()-180);hi=min(len(s),m.end()+1700)
+              ln=s.count('\n',0,m.start())+1
+              out.append('\nLINE '+str(ln)+' CHAR '+str(m.start())+'\n'+s[lo:hi].replace('\n',' ')[:1900])
+          pathlib.Path('features/symbol-map.md').write_text('\n'.join(out)[:110000])
+          PY
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add features/symbol-map.md
+          git commit -m "chore: map game state and upgrade functions"
+          git push
