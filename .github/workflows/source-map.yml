@@ -15,7 +15,7 @@ jobs:
           python3 - <<'PY'
           import pathlib,re
           s=pathlib.Path('index.html').read_text()
-          patterns=[r'(?:const|let|var)\\s+(?:FLOWERS|flowers|UPGRADES|upgrades|state|STORAGE_KEY|saveKey|FLOWER_DATA)\\b',r'function\\s+(?:render|renderShop|renderUpgrade|buyUpgrade|renderMarket|renderBouquet|renderFlowers|addFlower|chooseFlower|price|save|load|ftzQueueSave|buyFlower|plantFlower|nextDay|beginDay)\\b',r'(?:upgrade|nursery|shop|chosen|stock|saveGame)\\s*:',r'window\\.(?:render|state|FLOWERS|ftzQueueSave)\\s*=']
+          patterns=[r'(?:const|let|var)\s+(?:FLOWERS|flowers|UPGRADES|upgrades|state|STORAGE_KEY|saveKey|FLOWER_DATA)\b',r'function\s+(?:render|renderShop|renderUpgrade|buyUpgrade|renderMarket|renderBouquet|renderFlowers|addFlower|chooseFlower|price|save|load|ftzQueueSave|buyFlower|plantFlower|nextDay|beginDay)\b',r'(?:upgrade|nursery|shop|chosen|stock|saveGame)\s*:',r'window\.(?:render|state|FLOWERS|ftzQueueSave)\s*=']
           out=['# Symbol map','Total lines: '+str(s.count('\n')+1)]
           for pat in patterns:
             out.append('\n### '+pat)
