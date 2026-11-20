@@ -32,3 +32,5 @@ jobs:
           git add index.html
           git diff --cached --quiet || git commit -m "feat: integrate plantation with main game, stock and composer"
           git push
+
+# Retry after anchor correction
