@@ -1,0 +1,34 @@
+name: Integrate and browser-test rare plantation
+on:
+  push:
+    branches: [feature/plantation-integration]
+    paths: [.github/workflows/plantation-integration.yml]
+permissions:
+  contents: write
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch canonical HTML
+        run: python3 features/integrate.py
+      - name: Verify JavaScript and plantation logic
+        run: |
+          node --check features/rare-plantation.js
+          node --check features/rare-plantation-ui.js
+          node --check features/browser-smoke.cjs
+          node features/test-rare-plantation.cjs
+      - name: Install browser dependencies
+        run: |
+          npm install --no-save playwright@1.58.2
+          npx playwright install chromium
+      - name: Test real game in Chromium
+        run: node features/browser-smoke.cjs
+      - name: Commit validated game
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add index.html
+          git diff --cached --quiet || git commit -m "feat: integrate plantation with main game, stock and composer"
+          git push
