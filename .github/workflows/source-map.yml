@@ -23,7 +23,14 @@ jobs:
               lo=max(0,m.start()-180);hi=min(len(s),m.end()+1700)
               ln=s.count('\n',0,m.start())+1
               out.append('\nLINE '+str(ln)+' CHAR '+str(m.start())+'\n'+s[lo:hi].replace('\n',' ')[:1900])
-          pathlib.Path('features/symbol-map.md').write_text('\n'.join(out)[:110000])
+          keys=['const types=', 'let types=', 'var types=', 'function flowerArt(', 'function stockCount(', 'function availableCount(', 'function nextDay(', 'function completeOrder(', 'function finishOrder(', 'function finishDay(', 'function renderUpgrades(', 'function renderShop(', 'function renderFlowers(', 'function current(', 'function currentBuyPrice(', 'function buyStem(', 'function consume', 'function updateShopVisual(', 'function ftzLoadProgress(', 'function ftzSaveNow(', 'function render(){', 'function reset', 'state.upgrades.nursery', 'const upgradeDefs=', 'function ftzQueueSave(', 'function chosen', 'function flowerSvg(', 'function flowerHead(', 'function renderFlower', 'function submit', 'function handoff', 'function complete', 'function serve', 'function endDay(']
+          out.append('\\n# Focused API points')
+          for key in keys:
+            positions=[m.start() for m in re.finditer(re.escape(key),s)]
+            out.append('\\n### '+key+' count '+str(len(positions)))
+            for pos in positions[:4]:
+              out.append('\\nLINE '+str(s.count('\\n',0,pos)+1)+' '+s[max(0,pos-70):pos+2500].replace('\\n',' ')[:2600])
+          pathlib.Path('features/symbol-map.md').write_text('\n'.join(out)[:175000])
           PY
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
