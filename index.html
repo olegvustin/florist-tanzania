@@ -4112,7 +4112,20 @@ function hydrateFloristIcons(){
 const types=[{"id":"calla","name":"Белая калла","trait":"чистота и нежность","price":9,"buy":5,"rarity":"common","tags":["sincere","calm"]},{"id":"agapanthusWhite","name":"Белый агапантус","trait":"светлая гармония","price":10,"buy":6,"rarity":"rare","tags":["calm","care"]}].concat([{"id":"rose","name":"Протея","trait":"сила саванны","price":11,"buy":7,"rarity":"rare","tags":["hope","care"]},{"id":"tulip","name":"Стрелиция","trait":"свобода","price":10,"buy":6,"rarity":"rare","tags":["hope","joy"]},{"id":"sun","name":"Газания","trait":"солнечная радость","price":8,"buy":5,"rarity":"common","tags":["joy","hope"]},{"id":"daisy","name":"Остеоспермум","trait":"лёгкость","price":7,"buy":4,"rarity":"common","tags":["sincere","joy"]},{"id":"lav","name":"Агапантус","trait":"гармония","price":10,"buy":6,"rarity":"rare","tags":["calm","care"]},{"id":"white","name":"Леукоспермум","trait":"энергия","price":9,"buy":5,"rarity":"rare","tags":["hope","sincere"]},{"id":"peony","name":"Кливия","trait":"тепло","price":12,"buy":7,"rarity":"rare","tags":["love","care"]},{"id":"iris","name":"Нерине","trait":"изящество","price":10,"buy":6,"rarity":"rare","tags":["calm","love"]},{"id":"lily","name":"Глориоза","trait":"страсть","price":13,"buy":8,"rarity":"premium","tags":["passion","love"]},{"id":"hydra","name":"Цветущий алоэ","trait":"стойкость","price":10,"buy":6,"rarity":"rare","tags":["care","hope"]},{"id":"carnation","name":"Амариллис","trait":"торжество","price":11,"buy":7,"rarity":"rare","tags":["passion","joy"]},{"id":"ranunc","name":"Книфофия","trait":"огонь","price":12,"buy":7,"rarity":"premium","tags":["love","joy"]}]);
 // v0.15.92: Watsonia, the fifteenth African flower.
 types.push({id:"watsonia",name:"Ватсония",trait:"нежность рассвета",price:9,buy:5,rarity:"common",tags:["hope","joy"]});
+
+// v0.15.207 — rare plantation cultivars, never sold at market.
+types.push(
+  {id:"rare-protea-royal",name:"Королевская протея",trait:"эксклюзив плантации",price:16,buy:0,rarity:"premium",tags:["care","hope"],plantationOnly:true},
+  {id:"rare-strelitzia-gold",name:"Золотая стрелиция",trait:"эксклюзив плантации",price:17,buy:0,rarity:"premium",tags:["joy","hope"],plantationOnly:true},
+  {id:"rare-gloriosa-flame",name:"Огненная глориоза",trait:"эксклюзив плантации",price:18,buy:0,rarity:"premium",tags:["passion","love"],plantationOnly:true}
+);
+
 const palettes={"calla":["#f7f5df","#ffffff","#e0c76a"],"agapanthusWhite":["#fcfcf5","#eef3de","#d7ce9d"],"rose":["#e06f9c","#ffbdce","#833b5c"],"tulip":["#f07d2d","#326baf","#c9a04f"],"sun":["#efa32e","#ffe08a","#8b5531"],"daisy":["#9977c6","#e4ccfa","#d0a04e"],"lav":["#5b99c4","#d3e9f4","#4a6284"],"white":["#eb8042","#ffd0aa","#a44b33"],"peony":["#f58449","#ffcc83","#b55b36"],"iris":["#ef63a6","#ffbddb","#a65482"],"lily":["#e74439","#efc951","#9e4b39"],"hydra":["#f46748","#ffb055","#9a5133"],"carnation":["#e9673b","#ffcb4f","#ad562a"],"ranunc":["#ec7a94","#ffdb91","#c27a6a"]};
+Object.assign(palettes,{
+  "rare-protea-royal":["#ad5276","#f8bbc5","#6d355c"],
+  "rare-strelitzia-gold":["#efb834","#fff0a3","#b87c20"],
+  "rare-gloriosa-flame":["#e94a34","#ffd76e","#ac3128"]
+});
 function petalRing(count,cx,cy,rx,ry,colors,rot=0,stroke='rgba(120,80,80,.12)'){
  return Array.from({length:count},(_,i)=>`<ellipse cx="${cx}" cy="${cy-18}" rx="${rx}" ry="${ry}" transform="rotate(${rot+i*360/count} ${cx} ${cy})" fill="${colors[i%colors.length]}" stroke="${stroke}" stroke-width="1"/>`).join('');
 }
@@ -4278,7 +4291,7 @@ fridge:{name:'Охлаждаемый павильон',cost:165,unlockSeason:0,d
 showcase:{name:'Этно-витрина',cost:195,unlockSeason:0,desc:'Привлекает больше внимания к магазину «Танзания» и повышает шанс VIP-заказа.',bonus:'VIP-поток + репутация'},
 premiumPack:{name:'Африканская упаковка',cost:215,unlockSeason:1,desc:'Открывает эксклюзивные материалы, традиционные орнаменты и роскошное оформление букетов. Повышает впечатление от дорогих заказов.',bonus:'Открывает шёлковую упаковку'},
 assistant:{name:'Флорист из Танзании',cost:285,unlockSeason:1,desc:'Помогает собирать более сложные букеты и слегка экономит закупки.',bonus:'+2 цветка (до 10) и +5 баллов к оценке'},
-nursery:{name:'Питомник редких цветов',cost:210,unlockSeason:0,desc:'Собственные посадки позволяют закупать цветы на рынке дешевле.',bonus:'−1 монета за каждый цветок на рынке'},
+nursery:{name:'Питомник редких цветов',cost:210,unlockSeason:0,desc:'Выращивайте три сорта, которых нет на рынке: королевскую протею, золотую стрелицию и огненную глориозу.',bonus:'3 грядки · 3 эксклюзивных цветка'},
 atelier:{name:'Мастерская записок',cost:145,unlockSeason:1,desc:'Авторские открытки помогают точнее передавать чувства клиентов.',bonus:'+5 баллов к оценке букета с запиской'},
 courier:{name:'Сафари-доставка',cost:235,unlockSeason:1,desc:'Аккуратная доставка приносит дополнительные чаевые за удачный заказ.',bonus:'+12 монет при оценке от 65%'},
 promotion:{name:'Африканская афиша',cost:225,unlockSeason:1,desc:'Вывеска и реклама помогают привлекать новых клиентов.',bonus:'+2 репутации и +10 монет при оценке от 75%'}
@@ -4940,7 +4953,7 @@ function totalStock(){return Object.values(state.stock).reduce((a,b)=>a+b,0);}
 function stockCount(id){return state.stock[id]||0;}
 function reservedCount(id){return state.chosen.filter(x=>x===id).length;}
 function availableCount(id){return stockCount(id)-reservedCount(id);}
-function currentBuyPrice(id){const base=state.deals[id]||types.find(t=>t.id===id).buy;return Math.max(1,base-(state.upgrades.nursery?1:0));}
+function currentBuyPrice(id){const base=state.deals[id]||types.find(t=>t.id===id).buy;return Math.max(1,base);}
 /* Награда сезона дождей: скидка действует в сезоне солнца для ограниченного количества цветов. */
 function springSavingsPerFlower(id){
  const reward=state.seasonRewards.spring;
@@ -5184,7 +5197,7 @@ function generateDeals(){const season=currentSeason(); types.forEach(t=>{let mul
 function buyStem(id,qty){
  if(state.last||(typeof flowMax!=='undefined'&&flowMax>=1)||!Number.isInteger(qty)||qty<1)return;
  const flower=types.find(t=>t.id===id);
- if(!flower||!state.availability[id]){marketMessage('Сегодня этот цветок на рынке недоступен.');return;}
+ if(!flower||flower.plantationOnly||!state.availability[id]){marketMessage('Сегодня этот цветок на рынке недоступен.');return;}
  const cost=purchaseCost(id,qty);
  if(state.money<cost){marketMessage('Недостаточно монет для этой закупки.');return;}
  const spring=state.seasonRewards.spring;
@@ -5885,7 +5898,7 @@ function renderBouquet(){
 function renderMarket(){
  if(!$('marketGrid'))return;
  const season=currentSeason();
- $('marketGrid').innerHTML=types.map(f=>{
+ $('marketGrid').innerHTML=types.filter(f=>!f.plantationOnly).map(f=>{
   const stock=stockCount(f.id),deal=currentBuyPrice(f.id),ok=state.availability[f.id];
   const saving=springSavingsPerFlower(f.id),buyOne=purchaseCost(f.id,1),buyThree=purchaseCost(f.id,3);
   const hint=saving?`🎁 Скидка ${saving} за цветок`:season.featured.includes(f.id)?'Сезонный хит':season.pricey.includes(f.id)?'Сегодня дороже':'Обычная цена';
@@ -9143,4 +9156,24 @@ body[data-florist-tab=shop] .season-campaign-badge,body[data-florist-tab=journal
  body .content>.top>div>.eyebrow{display:none!important;}
 }
 </style>
+<!-- FTZ PLANTATION v0.15.207 -->
+<style id="ftz-rare-plantation-css">
+.ftz-rare-plantation{margin:22px 0;padding:20px;border-radius:20px;border:1px solid #dacda4;background:linear-gradient(145deg,#fffdf2,#edf4e5);color:#30513b}
+.ftz-rare-heading{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+.ftz-rare-heading h3{font:600 24px Georgia,serif;margin:0 0 6px}
+.ftz-rare-heading p{font-size:13px;line-height:1.5;margin:0;max-width:560px}
+.ftz-rare-status{font-size:12px;font-weight:700;color:#57704d}
+.ftz-rare-plots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+.ftz-rare-plot{display:flex;flex-direction:column;gap:10px;min-height:155px;padding:14px;border:1px solid #d9e0ca;background:#fffef9;border-radius:15px}
+.ftz-rare-plot b{font-size:12px;color:#749078}.ftz-rare-plot strong{font-size:15px}
+.ftz-rare-plot small{font-size:12px;color:#617761}
+.ftz-rare-plot select{width:100%;min-width:0;padding:9px;border:1px solid #c9d6c4;border-radius:8px;background:white}
+.ftz-rare-plot button{margin-top:auto;padding:10px;border:0;border-radius:10px;background:#35684b;color:white;font-weight:700;cursor:pointer}
+.ftz-rare-plot button:disabled{opacity:.46;cursor:not-allowed}
+.ftz-rare-inventory{font-size:12px;line-height:1.6;margin:15px 0 0;color:#506b4f}
+.ftz-rare-message{font-size:13px;margin:5px 0 0}
+@media(max-width:760px){.ftz-rare-plantation{padding:14px;margin:14px 0}.ftz-rare-plots{grid-template-columns:1fr}.ftz-rare-heading h3{font-size:21px}}
+</style>
+<script src="features/rare-plantation.js"></script>
+<script src="features/rare-plantation-ui.js"></script>
 </body></html>

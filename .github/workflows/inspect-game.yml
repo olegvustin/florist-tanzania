@@ -1,0 +1,36 @@
+name: Inspect game source for plantation integration
+on:
+  push:
+    branches: [feature/plantation-integration]
+    paths: [.github/workflows/inspect-game.yml]
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Summarize integration points
+        run: |
+          python3 - <<'PY'
+          import re, pathlib, html
+          p = pathlib.Path('index.html')
+          s=p.read_text('utf-8')
+          terms = ['upgrade','plantation','плантац','апгрейд','конструктор','букет','корзин','цвет','inventory','stock','flower','bouquet','basket','localStorage','сохран']
+          out=['# Source inspection report', f'Bytes: {p.stat().st_size}',f'Lines: {s.count(chr(10))+1}']
+          for t in terms:
+              hits=list(re.finditer(re.escape(t),s,re.I))
+              out.append(f'\n## {t}: {len(hits)} hits')
+              for h in hits[:8]:
+                  lo=max(0,h.start()-240);hi=min(len(s),h.end()+340)
+                  snippet=s[lo:hi].replace('\\n',' ').replace('\n',' ')
+                  out.append('- '+snippet[:700].replace('\x00',''))
+          pathlib.Path('features/source-inspection.md').write_text('\n'.join(out)[:60000],encoding='utf-8')
+          PY
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add features/source-inspection.md
+          git commit -m "chore: inspect main game integration points"
+          git push
