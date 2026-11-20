@@ -36,3 +36,5 @@ jobs:
 # Retry after anchor correction
 
 # Retry after clock fix
+
+# Retry mobile navigation and reload test
