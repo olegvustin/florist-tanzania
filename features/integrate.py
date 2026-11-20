@@ -29,8 +29,8 @@ replace_once("desc:'Собственные посадки позволяют з�
              "desc:'Выращивайте три сорта, которых нет на рынке: королевскую протею, золотую стрелицию и огненную глориозу.',bonus:'3 грядки · 3 эксклюзивных цветка'")
 replace_once('return Math.max(1,base-(state.upgrades.nursery?1:0));','return Math.max(1,base);')
 # Only regular flowers appear on the marketplace, including in the sale restriction.
-replace_once("  $('marketGrid').innerHTML=types.map(f=>{",
-             "  $('marketGrid').innerHTML=types.filter(f=>!f.plantationOnly).map(f=>{")
+replace_once("$('marketGrid').innerHTML=types.map(f=>{",
+             "$('marketGrid').innerHTML=types.filter(f=>!f.plantationOnly).map(f=>{")
 replace_once("if(!flower||!state.availability[id]){marketMessage('Сегодня этот цветок на рынке недоступен.');return;}",
              "if(!flower||flower.plantationOnly||!state.availability[id]){marketMessage('Сегодня этот цветок на рынке недоступен.');return;}")
 # Give newly grown cultivars fallback colors for any vector rendering path.
