@@ -18,6 +18,7 @@
     }
     const plantation = FloristRarePlantation.create({
       storage: window.localStorage,
+      now: () => Date.now(),
       onHarvest: ({id, quantity}) => {
         // The existing game stock is authoritative for bouquets, sales and spoilage.
         if (!state.upgrades.nursery || !state.started || state.finished) throw new Error('Питомник недоступен');
