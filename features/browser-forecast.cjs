@@ -15,9 +15,9 @@ const path=require('node:path');
    return {
      cards:cards.length,
      titles:cards.map(c=>c.querySelector('.forecast-copy>b')?.textContent),
-     weather:cards[0]?.innerText||'',
-     market:cards[1]?.innerText||'',
-     freshness:cards[2]?.innerText||'',
+     weather:cards[0]?.textContent||'',
+     market:cards[1]?.textContent||'',
+     freshness:cards[2]?.textContent||'',
      context:root.querySelectorAll('.ftz-forecast-context>div').length,
      originalWeather:f.weather,
      priceDeltas:Object.entries(rule.marketDelta||{}),
