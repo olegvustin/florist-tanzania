@@ -45,3 +45,5 @@ jobs:
 # Retry realistic fabric textures after cascade fix
 
 # Inspect manual drag comparison across wrapping choices
+
+# Preserve manual X drag coordinates while normalizing autoslots
