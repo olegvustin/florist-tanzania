@@ -1,0 +1,42 @@
+/* Флорист Танзания · фестиваль флористов */
+.ftz-competition,.ftz-competition-history{color:#294a39;background:linear-gradient(145deg,#fffdf4,#ecf4e8);border:1px solid #d8c8a0;border-radius:22px;padding:22px;margin:18px 0 24px;box-shadow:0 12px 30px rgba(51,83,55,.07)}
+.ftz-competition[hidden]{display:none!important}
+.ftz-competition-hero{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.ftz-competition-eyebrow{font-size:11px;font-weight:900;letter-spacing:1.2px;color:#91702c}
+.ftz-competition h3,.ftz-competition-history h3{font-family:Georgia,'Times New Roman',serif;font-size:clamp(23px,3vw,32px);font-weight:600;margin:8px 0 10px;color:#28513a}
+.ftz-competition p,.ftz-competition-history p{line-height:1.55;font-size:13px;margin:0 0 10px;color:#59715b}
+.ftz-competition-description{max-width:710px}
+.ftz-competition-fee{flex:0 0 auto;border-radius:17px;padding:15px 20px;background:#e5eddc;text-align:center;border:1px solid #d4dfcc}
+.ftz-competition-fee b{display:block;font-size:21px;color:#415c36}
+.ftz-competition-fee span{display:block;font-size:11px;color:#687b63}
+.ftz-competition-people,.ftz-competition-podium,.ftz-competition-medals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:15px 0}
+.ftz-competition-people>div,.ftz-competition-rival,.ftz-competition-medal{display:flex;flex-direction:column;gap:5px;border:1px solid #e1dfcb;background:#fffef9;padding:14px;border-radius:16px;min-width:0}
+.ftz-competition-people span,.ftz-rival-flowers{font-size:25px;white-space:nowrap;letter-spacing:3px;line-height:1.4}
+.ftz-competition-people b,.ftz-competition-rival strong{font-size:14px}
+.ftz-competition-people small,.ftz-competition-rival small,.ftz-competition-medal small{font-size:12px;color:#748373;line-height:1.4}
+.ftz-competition-action{display:flex;align-items:center;justify-content:space-between;gap:16px;background:#f4f4e9;border-radius:15px;padding:12px 14px}
+.ftz-competition-action p{margin:0}
+.ftz-competition-action button{flex:0 0 auto;border:0;background:#396f4d;color:#fff;border-radius:12px;padding:12px 16px;font-size:13px;font-weight:800;cursor:pointer}
+.ftz-competition-action button:disabled{opacity:.44;cursor:not-allowed}
+.ftz-competition p.ftz-competition-note{margin:12px 0 0;color:#7b856f;font-size:11px}
+.ftz-competition-fanfare{text-align:center;font-size:26px;letter-spacing:8px;color:#bd984f}
+.ftz-competition-result h3{text-align:center}
+.ftz-competition-score{text-align:center;display:flex;flex-direction:column;gap:6px}
+.ftz-competition-score strong{font:700 clamp(38px,6vw,60px) Georgia,serif;color:#367449}
+.ftz-competition-score span{font-weight:800;color:#997033}
+.ftz-competition-podium{grid-template-columns:repeat(4,minmax(0,1fr));margin:20px 0}
+.ftz-competition-rival{align-items:center;text-align:center;justify-content:center;min-height:160px}
+.ftz-competition-rival>b:first-child{color:#ab884f;font-size:12px}
+.ftz-competition-rival>b:last-child{font-size:19px;color:#316346;margin-top:auto}
+.ftz-competition-you{border-color:#b5a067;background:linear-gradient(#fffbea,#f6e7bf);box-shadow:0 5px 22px rgba(176,126,34,.15)}
+.ftz-competition-result h4{margin:22px 0 12px;font-family:Georgia,serif;font-size:18px}
+.ftz-competition-jury{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px}
+.ftz-competition-jury>div{display:grid;grid-template-columns:minmax(80px,1fr) minmax(45px,110px) 45px;align-items:center;gap:8px;font-size:12px}
+.ftz-competition-jury meter{width:100%;height:12px;accent-color:#5f8e64}
+.ftz-competition-jury b{text-align:right}
+.ftz-competition-prize{margin-top:14px!important;padding:12px;border-radius:12px;background:#eef5e6;color:#365d39!important;font-weight:700}
+.ftz-competition-medals{margin-bottom:0}
+.ftz-competition-medal-icon{font-size:31px}
+.ftz-competition-medal span{font-size:12px;color:#687c6d}
+.ftz-competition-medal.earned{background:linear-gradient(145deg,#fff8e0,#fffdf7);border-color:#d8c08b}
+@media(max-width:760px){.ftz-competition,.ftz-competition-history{padding:14px;margin:12px 0 16px}.ftz-competition-hero{flex-direction:column;gap:8px}.ftz-competition-fee{align-self:flex-start;padding:9px 12px}.ftz-competition-people,.ftz-competition-medals{grid-template-columns:1fr;gap:8px}.ftz-competition-people>div{display:grid;grid-template-columns:70px 1fr;align-items:center;column-gap:8px}.ftz-competition-people small{grid-column:2}.ftz-competition-action{flex-direction:column;align-items:stretch}.ftz-competition-action button{width:100%;min-height:46px}.ftz-competition-podium{grid-template-columns:repeat(2,minmax(0,1fr))}.ftz-competition-jury{grid-template-columns:1fr}.ftz-competition-medal{min-height:86px}}
