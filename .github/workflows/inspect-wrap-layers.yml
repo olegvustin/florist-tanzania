@@ -1,0 +1,35 @@
+name: Inspect paper layer markup
+on:
+  push:
+    branches: [feature/bouquet-seven-wraps-v015211]
+    paths: [.github/workflows/inspect-wrap-layers.yml]
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('index.html').read_text()
+          a=s.index('function renderHandoffWrapLayers(){')
+          b=s.index('function ',a+15)
+          seg=s[a:b]
+          seg=re.sub(r'data:image/(?:png|webp|jpeg);base64,[A-Za-z0-9+/=]+','[IMAGE]',seg)
+          lines=['# Paper layers','raw_len '+str(b-a),'render_prefix '+seg[:3500], 'render_suffix '+seg[-7000:]]
+          for pat in ['.ftz191-split','.ftz191-flower-top','.ftz191-stem-bottom','.ftz-pocket-layers','.approved-african-pack-overlay','classic-material-wrap','.ftz-paper-selected-green']:
+            lines.append('\n### '+pat)
+            for m in list(re.finditer(re.escape(pat),s))[:8]:
+              t=s[max(0,m.start()-200):m.end()+500]
+              t=re.sub(r'data:image/(?:png|webp|jpeg);base64,[A-Za-z0-9+/=]+','[IMAGE]',t)
+              lines.append(t[:700])
+          Path('features/wrap-layer-inspection.md').write_text('\n'.join(lines)[:35000])
+          PY
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add features/wrap-layer-inspection.md
+          git commit -m "chore: inspect packaging layers"
+          git push
