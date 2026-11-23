@@ -77,6 +77,7 @@ const path=require('node:path');
     pos:state.positions[0],
     node:document.querySelector('#bouquet .ftz211-unified-bloom')?.style.left
   }));
+  console.log('manual floral position diagnostic',JSON.stringify(manual));
   assert.equal(manual.pos.x,17);
   assert(manual.node.includes('17px'),'Manual positions lost on wrap switch');
   fs.mkdirSync('features/qa-v211',{recursive:true});
