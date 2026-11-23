@@ -13,12 +13,12 @@
     return {cheaper:byDirection(-1),pricier:byDirection(1)};
   }
   function init(){
-    if(typeof forecastRule!=='function'||typeof renderForecast!=='function'||
+    if(typeof window.FTZForecastBridge?.forecastRule!=='function'||typeof renderForecast!=='function'||
        typeof currentSeason!=='function'||typeof state==='undefined')return;
     window.renderForecast=function(){
       const box=document.getElementById('cityForecast');if(!box)return;
       const f=cityForecasts[state.day]||cityForecasts[cityForecasts.length-1];
-      const rule=forecastRule();
+      const rule=window.FTZForecastBridge.forecastRule();
       const groups=marketGroups(rule,types);
       const weather=String(f.weather||'').replace(/^[^а-яёa-z]+/i,'').trim();
       const icon=window.forecastIcon||((kind)=>'<span class="ftz-forecast-simple-icon">'+(kind==='weather'?'☀️':kind==='market'?'📊':'🌿')+'</span>');
