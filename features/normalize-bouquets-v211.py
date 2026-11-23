@@ -53,7 +53,7 @@ replace=""" const activeWrap=$('wrap')?.value||'kraft';
    const largeBloom=['peony','sun','hydra','rose','ranunc','protea','dahlia','gerbera'].includes(id);
    const splitEdge=tallBloom?'59%':largeBloom?'54%':['agapanthusWhite','white','hydra'].includes(id)?'58%':'56%';
    const top=pos.y+profile.dy-(total>=8?5:0)-8;
-   const offsetX=total>=7?pos.x*.88:pos.x;
+   const offsetX=state.positions[i]?pos.x:(total>=7?pos.x*.88:pos.x);
    const bloomScale=(pos.scale*profile.scale*bloomBoost).toFixed(3);
    // Two image segments are needed only for textile sleeves; the photograph
    // itself and all placement values are the same in the African variants.
