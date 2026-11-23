@@ -43,3 +43,5 @@ jobs:
           git push
 
 # Retry realistic fabric textures after cascade fix
+
+# Inspect manual drag comparison across wrapping choices
