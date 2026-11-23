@@ -26,6 +26,22 @@ const path=require('node:path');
    };
  });
  const a=await read();
+ const branding=await page.evaluate(()=>{
+   const cards=[...document.querySelectorAll('#cityForecast .ftz-three-forecast-cards>.forecast-card')];
+   const icons=cards.map(c=>c.querySelector('.ftz-forecast-emblem'));
+   return {count:icons.filter(Boolean).length,
+      dimensions:icons.map(e=>({width:e?.getBoundingClientRect().width,height:e?.getBoundingClientRect().height})),
+      cardHeights:cards.map(c=>c.getBoundingClientRect().height),
+      weatherText:cards[0]?.textContent,
+      footer:document.querySelector('#cityForecast .forecast-disclaimer')?.textContent||''};
+ });
+ assert.equal(branding.count,3,'Three custom emblems required');
+ assert(branding.dimensions.every(d=>d.width===branding.dimensions[0].width&&d.height===branding.dimensions[0].height),
+   'Forecast icons must have identical dimensions');
+ assert(branding.cardHeights.every(x=>Math.abs(x-branding.cardHeights[0])<=1),
+   'Forecast cards must be equal in height on desktop');
+ assert(!branding.weatherText.includes('Погодные условия дня'));
+ assert(!branding.footer.includes('Погода, рыночные цены и свежесть показаны отдельно'));
  assert.equal(a.cards,3);
  assert.deepEqual(a.titles,['Погода','Рынок цветов','Свежесть цветов']);
  assert.equal(a.context,2);
@@ -48,6 +64,10 @@ const path=require('node:path');
      rootWidth:root.getBoundingClientRect().width,cardWidths:widths,
      overflow:document.documentElement.scrollWidth>window.innerWidth+2};
  });
+ const mobileIcons=await page.evaluate(()=>[...document.querySelectorAll('#cityForecast .ftz-forecast-emblem')]
+    .map(e=>[e.getBoundingClientRect().width,e.getBoundingClientRect().height]));
+ assert.equal(mobileIcons.length,3);
+ assert(mobileIcons.every(x=>x[0]===mobileIcons[0][0]&&x[1]===mobileIcons[0][1]));
  assert(!mobile.overflow,'Mobile document horizontally overflows');
  assert(mobile.cardWidths.every(x=>x<=mobile.rootWidth+1));
  assert.equal(errors.length,0,'Browser JS errors '+errors.join(' | '));
