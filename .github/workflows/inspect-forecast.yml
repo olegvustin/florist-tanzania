@@ -1,0 +1,33 @@
+name: Inspect forecast cards
+on:
+  push:
+    branches: [feature/forecast-three-cards]
+    paths: [.github/workflows/inspect-forecast.yml]
+permissions: {contents: write}
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract forecast and market code
+        run: |
+          python3 - <<'PY'
+          import pathlib,re
+          s=pathlib.Path('index.html').read_text(encoding='utf-8')
+          terms=['function renderForecast()', 'const cityForecasts=', 'function generateDeals(', 'function currentBuyPrice(', 'function ftzRemainingDays(', 'function stockCount(', 'function renderMarket()', 'forecast-impact', 'Влияние:', 'Дешевле:', 'Сроки хранения', 'forecast-cards', 'forecast-card', 'function renderFlow()']
+          out=['# Forecast source review']
+          for key in terms:
+              matches=list(re.finditer(re.escape(key),s))
+              out.append('\n## '+key+' count='+str(len(matches)))
+              for m in matches[:6]:
+                  a=max(0,m.start()-250);b=min(len(s),m.end()+11000 if key in ('function renderForecast()','const cityForecasts=','function generateDeals(') else m.end()+1500)
+                  part=s[a:b]
+                  part=re.sub(r'data:image/(?:png|webp|jpeg);base64,[A-Za-z0-9+/=]+','[IMAGE]',part)
+                  out.append('POSITION '+str(m.start())+'\n'+part[:11500])
+          pathlib.Path('features/forecast-source.md').write_text('\n'.join(out)[:130000],encoding='utf-8')
+          PY
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add features/forecast-source.md
+          git commit -m "chore: inspect forecast and pricing source"
+          git push
