@@ -17,3 +17,19 @@
 #cityForecast .ftz-forecast-context span{font-size:12px;line-height:1.55;color:#607265}
 @media(max-width:1050px){#cityForecast .ftz-three-forecast-cards{grid-template-columns:1fr}#cityForecast .ftz-three-forecast-cards>.forecast-card{min-height:110px}}
 @media(max-width:760px){#cityForecast .ftz-forecast-context{grid-template-columns:1fr}#cityForecast .ftz-three-forecast-cards>.forecast-card{padding:12px;gap:10px}#cityForecast .ftz-three-forecast-cards .symbol{flex-basis:55px}#cityForecast .ftz-three-forecast-cards .ftz-forecast-simple-icon{width:55px;height:55px;font-size:25px}#cityForecast .ftz-three-forecast-cards .brand-forecast-art{width:55px;height:55px}}
+
+/* v0.15.210: единство размеров, пропорций и палитры всех трёх медальонов */
+#cityForecast .ftz-three-forecast-cards{align-items:stretch}
+#cityForecast .ftz-three-forecast-cards>.forecast-card{
+  height:100%;min-height:158px;box-sizing:border-box;align-items:flex-start;
+}
+#cityForecast .ftz-three-forecast-cards .symbol{flex:0 0 64px;width:64px;display:block}
+#cityForecast .ftz-forecast-emblem{display:block;width:64px;height:64px;filter:drop-shadow(0 4px 7px rgba(84,66,25,.13))}
+#cityForecast .ftz-forecast-emblem svg{display:block;width:100%;height:100%}
+#cityForecast .ftz-three-forecast-cards .forecast-copy{padding-top:4px}
+#cityForecast .ftz-forecast-weather .forecast-copy p{margin-bottom:0}
+@media(max-width:760px){
+ #cityForecast .ftz-three-forecast-cards>.forecast-card{height:auto;min-height:100px}
+ #cityForecast .ftz-three-forecast-cards .symbol{flex-basis:56px;width:56px}
+ #cityForecast .ftz-forecast-emblem{width:56px;height:56px}
+}
