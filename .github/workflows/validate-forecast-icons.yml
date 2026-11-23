@@ -1,0 +1,28 @@
+name: Validate unified forecast icons
+on:
+  push:
+    branches: [feature/unified-forecast-icons]
+    paths: [.github/workflows/validate-forecast-icons.yml]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax and core tests
+        run: |
+          node --check features/forecast-three-cards.js
+          node --check features/browser-forecast.cjs
+          node features/test-rare-plantation.cjs
+          node features/test-florist-competitions.cjs
+      - name: Browser install
+        run: |
+          npm install --no-save playwright@1.58.2
+          npx playwright install chromium
+      - name: Browser UI and regressions
+        run: |
+          node features/browser-forecast.cjs
+          node features/browser-competitions.cjs
+          node features/browser-smoke.cjs
