@@ -41,3 +41,5 @@ jobs:
           git add index.html
           git diff --cached --quiet || git commit -m "feat: unified bouquet geometry and enhanced seven sleeve materials"
           git push
+
+# Retry realistic fabric textures after cascade fix
