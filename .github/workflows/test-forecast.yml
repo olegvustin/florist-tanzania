@@ -1,0 +1,37 @@
+name: Test and integrate forecast cards
+on:
+  push:
+    branches: [feature/forecast-three-cards]
+    paths: [.github/workflows/test-forecast.yml]
+permissions:
+  contents: write
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Integrate updated forecast
+        run: python3 features/integrate-forecast.py
+      - name: JavaScript syntax and existing logic
+        run: |
+          node --check features/forecast-three-cards.js
+          node --check features/browser-forecast.cjs
+          node features/test-rare-plantation.cjs
+          node features/test-florist-competitions.cjs
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright@1.58.2
+          npx playwright install chromium
+      - name: Run regression tests in browser
+        run: |
+          node features/browser-forecast.cjs
+          node features/browser-competitions.cjs
+          node features/browser-smoke.cjs
+      - name: Commit tested HTML
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add index.html
+          git diff --cached --quiet || git commit -m "feat: separate market, weather and freshness cards"
+          git push
