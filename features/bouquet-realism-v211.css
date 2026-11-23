@@ -49,16 +49,16 @@
   opacity:.45;
 }
 /* Kraft — subtle fibrous paper, natural creases, never textile gloss. */
-.bouquet .classic-material-kraft::after,
-.handoff-bouquet .classic-material-kraft::after{
+.bouquet .handoff-paper-front.approved-african-pack-overlay.classic-material-kraft::after,
+.handoff-bouquet .handoff-paper-front.approved-african-pack-overlay.classic-material-kraft::after{
   background:
     repeating-linear-gradient(97deg,rgba(119,74,34,.09) 0 1px,transparent 1px 5px),
     linear-gradient(105deg,rgba(255,248,227,.3),rgba(77,44,20,.15) 50%,rgba(255,248,229,.17));
   opacity:.25;
 }
 /* Linen — cross-woven matte fibre visibly different from kraft paper. */
-.bouquet .classic-material-linen::after,
-.handoff-bouquet .classic-material-linen::after{
+.bouquet .handoff-paper-front.approved-african-pack-overlay.classic-material-linen::after,
+.handoff-bouquet .handoff-paper-front.approved-african-pack-overlay.classic-material-linen::after{
   background:
     repeating-linear-gradient(0deg,rgba(106,94,70,.17) 0 1px,transparent 1px 5px),
     repeating-linear-gradient(90deg,rgba(124,110,86,.13) 0 1px,transparent 1px 6px),
@@ -66,23 +66,23 @@
   opacity:.32;
 }
 /* Velvet — deeper plush folds, controlled side light. */
-.bouquet .classic-material-velvet::after,
-.handoff-bouquet .classic-material-velvet::after{
+.bouquet .handoff-paper-front.approved-african-pack-overlay.classic-material-velvet::after,
+.handoff-bouquet .handoff-paper-front.approved-african-pack-overlay.classic-material-velvet::after{
   background:
     radial-gradient(ellipse at 31% 23%,rgba(255,205,218,.37),transparent 40%),
     linear-gradient(103deg,rgba(18,0,7,.38),rgba(255,215,221,.10) 28%,rgba(19,0,12,.26) 64%,rgba(255,212,223,.22) 87%,rgba(18,0,10,.33));
   opacity:.42;
 }
 /* Silk — slightly luminous, unlike linen or velvet. */
-.bouquet .classic-material-signature::after,
-.handoff-bouquet .classic-material-signature::after{
+.bouquet .handoff-paper-front.approved-african-pack-overlay.classic-material-signature::after,
+.handoff-bouquet .handoff-paper-front.approved-african-pack-overlay.classic-material-signature::after{
   background:linear-gradient(121deg,rgba(255,251,218,.32),transparent 27%,rgba(37,38,55,.1) 54%,rgba(251,247,220,.2) 75%);
   opacity:.31;
 }
 /* Four African packs keep all original pigments and designs; subtle folds
  * create volume without repainting the culturally distinctive patterns. */
-.bouquet .ftz-test-pack-front::after,
-.handoff-bouquet .ftz-test-pack-front::after{
+.bouquet .handoff-paper-front.approved-african-pack-overlay.ftz-test-pack-front::after,
+.handoff-bouquet .handoff-paper-front.approved-african-pack-overlay.ftz-test-pack-front::after{
   background:linear-gradient(109deg,rgba(25,19,12,.26) 5%,rgba(255,222,147,.08) 25%,transparent 40%,rgba(24,19,16,.18) 54%,rgba(255,224,152,.14) 76%,rgba(31,19,17,.20) 95%);
   opacity:.31;
 }
