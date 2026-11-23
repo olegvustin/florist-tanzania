@@ -1,0 +1,19 @@
+/* Флорист Танзания · v0.15.209 — три самостоятельные карточки */
+#cityForecast .ftz-three-forecast-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+#cityForecast .ftz-three-forecast-cards>.forecast-card{display:flex;align-items:flex-start;min-width:0;gap:13px;min-height:175px;background:linear-gradient(180deg,#fffdf6,#faf4e6);border-color:#dfd0af;padding:16px}
+#cityForecast .ftz-three-forecast-cards .symbol{flex:0 0 62px;margin:0}
+#cityForecast .ftz-three-forecast-cards .brand-forecast-art{width:62px;height:62px}
+#cityForecast .ftz-three-forecast-cards .brand-forecast-art svg{width:52px;height:52px}
+#cityForecast .ftz-three-forecast-cards .forecast-copy{flex:1;min-width:0}
+#cityForecast .ftz-three-forecast-cards .forecast-copy b{font-size:15px;color:#2b503c;margin-bottom:7px}
+#cityForecast .ftz-three-forecast-cards .forecast-copy p{font-size:13px;color:#4d6353;line-height:1.5;margin-bottom:7px}
+#cityForecast .ftz-three-forecast-cards .ftz-forecast-simple-icon{width:62px;height:62px;display:grid;place-items:center;background:linear-gradient(160deg,#f8efd4,#e8f1da);border:1px solid #e0c995;border-radius:18px;font-size:29px;box-shadow:0 4px 10px #4a704414}
+#cityForecast .ftz-market-lines p{margin:0 0 7px}
+#cityForecast .ftz-market-lines strong{font-size:12px;color:#355e44}
+#cityForecast .ftz-forecast-explainer{font-size:11px;color:#7b7564;line-height:1.5;padding-top:7px;border-top:1px solid #eadcc3;margin-top:9px}
+#cityForecast .ftz-forecast-context{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:13px}
+#cityForecast .ftz-forecast-context>div{display:flex;flex-direction:column;gap:5px;border:1px solid #e6dcc8;border-radius:14px;background:#fffdf8;padding:12px 15px}
+#cityForecast .ftz-forecast-context strong{font-size:13px;color:#335945}
+#cityForecast .ftz-forecast-context span{font-size:12px;line-height:1.55;color:#607265}
+@media(max-width:1050px){#cityForecast .ftz-three-forecast-cards{grid-template-columns:1fr}#cityForecast .ftz-three-forecast-cards>.forecast-card{min-height:110px}}
+@media(max-width:760px){#cityForecast .ftz-forecast-context{grid-template-columns:1fr}#cityForecast .ftz-three-forecast-cards>.forecast-card{padding:12px;gap:10px}#cityForecast .ftz-three-forecast-cards .symbol{flex-basis:55px}#cityForecast .ftz-three-forecast-cards .ftz-forecast-simple-icon{width:55px;height:55px;font-size:25px}#cityForecast .ftz-three-forecast-cards .brand-forecast-art{width:55px;height:55px}}
