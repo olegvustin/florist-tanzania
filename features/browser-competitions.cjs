@@ -25,6 +25,7 @@ const path=require('node:path');
    document.getElementById('startScreen')?.classList.add('hidden');
    switchTab('work');
    render();
+   if(typeof renderFlow==='function')renderFlow();
    return {day:state.day,shown:!document.getElementById('ftzCompetition').hidden,
       initialStock:state.chosen.map(id=>state.stock[id]),
       chosen:state.chosen.slice(),money:state.money};
@@ -58,6 +59,7 @@ const path=require('node:path');
    state.chosen=['rose','tulip','lily','calla','sun'];
    for(const id of state.chosen)state.stock[id]=Math.max(3,state.stock[id]||0);
    render();
+   if(typeof renderFlow==='function')renderFlow();
  });
  assert(await page.locator('#ftzCompetitionSubmit').isEnabled(),'Day 13 contest missing');
  await page.locator('#ftzCompetitionSubmit').click();
@@ -69,6 +71,7 @@ const path=require('node:path');
    state.chosen=['rose','tulip','lily','calla','sun'];
    for(const id of state.chosen)state.stock[id]=Math.max(3,state.stock[id]||0);
    render();
+   if(typeof renderFlow==='function')renderFlow();
  });
  assert(await page.locator('#ftzCompetitionSubmit').isVisible(),'Mobile grand prix entry missing');
  await page.locator('#ftzCompetitionSubmit').click();
