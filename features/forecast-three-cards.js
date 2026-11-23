@@ -62,10 +62,10 @@
           '<div class="forecast-card ftz-forecast-weather"><div class="symbol">'+forecastMedallion('weather')+'</div>'+
           '<div class="forecast-copy"><b>Погода</b><p>'+safe(weather)+'</p>'+
           '</div></div>'+
-          '<div class="forecast-card ftz-forecast-market"><div class="symbol"><span class="ftz-forecast-simple-icon">📊</span></div>'+
+          '<div class="forecast-card ftz-forecast-market"><div class="symbol">'+forecastMedallion('market')+'</div>'+
           '<div class="forecast-copy"><b>Рынок цветов</b>'+marketText+
           '<div class="ftz-forecast-explainer">Дополнительное влияние дня на закупочные цены. Итоговые цены — на рынке.</div></div></div>'+
-          '<div class="forecast-card ftz-forecast-fresh"><div class="symbol"><span class="ftz-forecast-simple-icon">🌿</span></div>'+
+          '<div class="forecast-card ftz-forecast-fresh"><div class="symbol">'+forecastMedallion('fresh')+'</div>'+
           '<div class="forecast-copy"><b>Свежесть цветов</b><p>'+safe(freshness)+'</p>'+
           '<div class="ftz-forecast-explainer">Увядание учитывается по сроку хранения каждой партии, без погодного штрафа.</div></div></div>'+
         '</div>'+
