@@ -1,0 +1,29 @@
+name: Extract detailed forecast rendering
+on:
+  push:
+    branches: [feature/forecast-three-cards]
+    paths: [.github/workflows/forecast-detail.yml]
+permissions: {contents: write}
+jobs:
+  report:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('index.html').read_text()
+          i=s.find('function forecastImpactHtml(')
+          assert i>0
+          start=i-4500
+          end=i+19000
+          a=s[start:end]
+          a=re.sub(r'data:image/(?:png|webp|jpeg);base64,[A-Za-z0-9+/=]+','[IMAGE]',a)
+          Path('features/forecast-detail.md').write_text('# Forecast details\n'+a)
+          PY
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add features/forecast-detail.md
+          git commit -m "chore: detail forecast component"
+          git push
