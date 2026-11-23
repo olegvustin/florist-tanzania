@@ -12,7 +12,7 @@ assert 'function forecastRule(' in s
 assert 'function ftzLifeBonus(' in s
 bridge_anchor='window.generateDeals=function(){'
 assert s.count(bridge_anchor)==1
-s=s.replace(bridge_anchor,'window.FTZForecastBridge={forecastRule:()=>forecastRule()};\\n'+bridge_anchor,1)
+s=s.replace(bridge_anchor,'window.FTZForecastBridge={forecastRule:()=>forecastRule()};\n'+bridge_anchor,1)
 s=s.replace('</head>','<link rel="stylesheet" href="features/forecast-three-cards.css">\n</head>',1)
 s=s.replace('</body>',mark+'\n<script src="features/forecast-three-cards.js"></script>\n</body>',1)
 p.write_text(s,encoding='utf-8')
