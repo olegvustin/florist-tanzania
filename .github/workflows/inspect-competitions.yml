@@ -1,0 +1,44 @@
+name: Inspect florist tournament hooks
+on:
+  push:
+    branches: [feature/florist-competitions]
+    paths: [.github/workflows/inspect-competitions.yml]
+permissions: {contents: write}
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Map game lifecycle
+        run: |
+          python3 - <<'PY'
+          import pathlib,re
+          s=pathlib.Path('index.html').read_text(encoding='utf-8')
+          patterns=[
+            r'function\s+(?:render|give|finish|deliver|complete|submit|advance|next|evaluate|score|reward|serve|result|clear|reset|save|start|switchTab|show|choose)[A-Za-z0-9_]*\s*\(',
+            r'function\s+(?:current|price|budgetLimit|availableCount|totalStock|renderUpgrades|renderMarket|renderBouquet)\s*\(',
+            r'\b(?:flowStep|flowMax|state\.last|state\.day\+\+|state\.day\s*=|state\.money\s*\+=|state\.rep\s*\+=|FTZ_SAVE_KEY|render\(\);|ftzSaveNow\(\))',
+            r'id="(?:shop|work|stage-0|stage-1|stage-2|stage-market|stage-compose|upgradeGrid|journal|startScreen|topTabs)"',
+            r'<script[^>]*src=|</body>|function\s+ftzLoadProgress\('
+          ]
+          out=['# Florist competition integration report',f'File length: {len(s)}']
+          for pat in patterns:
+            hits=list(re.finditer(pat,s))
+            out.append('\n## PATTERN '+pat+' ('+str(len(hits))+')')
+            for m in hits[:100]:
+              a=max(0,m.start()-120)
+              b=min(len(s),m.end()+550)
+              snippet=s[a:b]
+              snippet=re.sub(r'data:image/(?:png|webp|jpeg);base64,[A-Za-z0-9+/=]+','[IMAGE]',snippet)
+              out.append('AT '+str(m.start())+' L '+str(s.count('\n',0,m.start())+1)+': '+snippet.replace('\n',' ')[:680])
+          for key in ['function nextDay(', 'function nextOrder(', 'function switchTab(', 'function finishOrder(', 'function completeOrder(', 'function render(){', 'function render()', 'const state=', 'function renderUpgrades(', 'const stories=', 'function ftzSaveNow(', 'function ftzLoadProgress(', 'function buyUpgrade(', 'function choose(', 'function remove(', 'function clearBouquet(', 'function renderBouquet(', 'function evaluate(', 'function finish(', 'function submit(', 'function deliver(', 'function accept(', 'function next(']:
+            i=s.find(key)
+            if i>=0:
+              out.append('\n## EXACT '+key+' AT '+str(i)+'\n'+s[i:i+3700].replace('\n',' '))
+          pathlib.Path('features/competition-inspection.md').write_text('\n'.join(out)[:180000],encoding='utf-8')
+          PY
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add features/competition-inspection.md
+          git commit -m "chore: map competition integration points"
+          git push
