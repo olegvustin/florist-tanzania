@@ -1,0 +1,49 @@
+name: Test and integrate bouquet v0.15.211
+on:
+  push:
+    branches: [feature/bouquet-seven-wraps-v015211]
+    paths: [.github/workflows/test-bouquet-v211.yml]
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - name: Integrate geometry and material changes
+        run: python3 features/normalize-bouquets-v211.py
+      - name: Syntax and earlier game logic tests
+        run: |
+          node --check features/browser-bouquet-v211.cjs
+          node features/test-rare-plantation.cjs
+          node features/test-florist-competitions.cjs
+      - name: Browser dependencies
+        run: |
+          npm install --no-save playwright@1.58.2
+          npx playwright install chromium
+      - name: Test seven wrappers and regressions
+        run: |
+          node features/browser-bouquet-v211.cjs
+          node features/browser-forecast.cjs
+          node features/browser-competitions.cjs
+          node features/browser-smoke.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bouquet-seven-wraps-v211-previews
+          path: features/qa-v211/*.png
+          if-no-files-found: ignore
+      - name: Commit tested game to feature branch
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add index.html
+          git diff --cached --quiet || git commit -m "feat: unified bouquet geometry and enhanced seven sleeve materials"
+          git push
+
+# Retry realistic fabric textures after cascade fix
+
+# Inspect manual drag comparison across wrapping choices
+
+# Preserve manual X drag coordinates while normalizing autoslots

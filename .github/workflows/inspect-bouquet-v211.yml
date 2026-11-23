@@ -1,0 +1,53 @@
+name: Inspect bouquet geometry and layers
+on:
+  push:
+    branches: [feature/bouquet-seven-wraps-v015211]
+    paths: [.github/workflows/inspect-bouquet-v211.yml]
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract composition hooks
+        run: |
+          python3 - <<'PY'
+          import pathlib,re
+          s=pathlib.Path('index.html').read_text()
+          keys=[
+            'function renderBouquet(){',
+            'function renderHandoffWrapLayers(){',
+            'function ftz167BasketFlower(', 'function bouquetPosFor(',
+            'function tzAfricanBloomPosition(', 'function tzFloristTypedPositions(',
+            'function flowerLayer(', 'function ftzComposeFlower(', 'function flowerHead(',
+            'function ftzRenderWrapChoices(', 'function ftzRenderClassic',
+            'function ftzRenderSelectedGreen(', 'function ftzBasketHandleOverlay(',
+            'function ftz173SelectedGreenAccents(', 'function renderPlushGift(',
+            'function ftz167BasketFiller(', 'function ftz184',
+            'function renderHandoffBouquet(', 'function renderHandoff',
+            'function renderFlower(', 'const wrapBalance=', 'const TZ_APPROVED_PACK_IMAGES=',
+            'const bouquetHeadImages=', 'function ftzIsBasket(',
+            'const FTZ_HARMONY_NAMES=', 'FTZ193_INSTALLED', 'ftz-pocket-layers',
+            'approved-african-pack-overlay', 'classic-material-wrap',
+            'ftz-paper-selected-green','bouquet .blossom', 'ftz-flower-pos',
+            'ftzWrapSelectedLabel', 'ftz-wrap-picker',
+          ]
+          out=['# Bouquet v0.15.211 source inspection','size '+str(len(s))]
+          for key in keys:
+            matches=list(re.finditer(re.escape(key),s,re.I))
+            out.append('\n## '+key+' Count '+str(len(matches)))
+            for m in matches[:3]:
+              offset=m.start()
+              length=12500 if key in ('function renderBouquet(){','function renderHandoffWrapLayers(){') else 2800
+              t=s[max(0,offset-130):offset+length]
+              t=re.sub(r'data:image/(?:png|webp|jpeg);base64,[A-Za-z0-9+/=]+','[IMAGE]',t)
+              t=re.sub(r'[A-Za-z0-9+/]{1000,}={0,2}','[BINARY]',t)
+              out.append('AT '+str(offset)+'\n'+t[:length])
+          pathlib.Path('features/bouquet-v211-inspection.md').write_text('\n'.join(out)[:190000])
+          PY
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add features/bouquet-v211-inspection.md
+          git commit -m "chore: inspect current florist wrap and flower layer code"
+          git push
