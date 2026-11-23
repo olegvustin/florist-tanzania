@@ -49,6 +49,7 @@ const path=require('node:path');
  await page.evaluate(()=>{FTZCompetition.submit();});
  assert.equal(await page.evaluate(()=>state.money),after.money,'Duplicate entry changed money');
  await page.reload({waitUntil:'domcontentloaded'});
+ await page.evaluate(()=>document.getElementById('startScreen')?.classList.add('hidden'));
  const restored=await page.evaluate(()=>({rank:state.competitions?.village?.rank,money:state.money}));
  assert.equal(restored.rank,after.rank,'Competition result not restored');
  assert.equal(restored.money,after.money);
