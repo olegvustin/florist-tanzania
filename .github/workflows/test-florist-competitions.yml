@@ -37,3 +37,5 @@ jobs:
           git push
 
 # Recheck composer stage visibility
+
+# Recheck saved-session splash overlay handling
