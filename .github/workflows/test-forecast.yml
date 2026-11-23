@@ -37,3 +37,5 @@ jobs:
           git push
 
 # Revalidate forecast bridge and mobile cards
+
+# Verify forecast text and regression checks
