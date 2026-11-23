@@ -11,7 +11,7 @@ const path=require('node:path');
  const read=()=>page.evaluate(()=>{
    const root=document.getElementById('cityForecast');
    const cards=[...root.querySelectorAll('.ftz-three-forecast-cards>.forecast-card')];
-   const f=cityForecasts[state.day],rule=forecastRule();
+   const f=cityForecasts[state.day],rule=window.FTZForecastBridge.forecastRule();
    return {
      cards:cards.length,
      titles:cards.map(c=>c.querySelector('.forecast-copy>b')?.textContent),
