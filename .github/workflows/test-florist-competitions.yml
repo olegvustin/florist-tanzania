@@ -1,0 +1,41 @@
+name: Test and integrate florist competitions
+on:
+  push:
+    branches: [feature/florist-competitions]
+    paths: [.github/workflows/test-florist-competitions.yml]
+permissions:
+  contents: write
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Integrate into game
+        run: python3 features/integrate-competitions.py
+      - name: Syntax and scoring tests
+        run: |
+          node --check features/florist-competitions.js
+          node --check features/florist-competitions-ui.js
+          node --check features/browser-competitions.cjs
+          node features/test-florist-competitions.cjs
+          node features/test-rare-plantation.cjs
+      - name: Prepare Chromium
+        run: |
+          npm install --no-save playwright@1.58.2
+          npx playwright install chromium
+      - name: Test game in browser
+        run: |
+          node features/browser-competitions.cjs
+          node features/browser-smoke.cjs
+      - name: Commit verified game
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add index.html
+          git diff --cached --quiet || git commit -m "feat: florist tournaments integrated, browser tested"
+          git push
+
+# Recheck composer stage visibility
+
+# Recheck saved-session splash overlay handling
