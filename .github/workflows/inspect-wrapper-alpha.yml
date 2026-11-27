@@ -19,7 +19,7 @@ jobs:
           from PIL import Image
           s=Path('index.html').read_text()
           a=s.find('const TZ_APPROVED_PACK_IMAGES=')
-          b=s.find(';',a)
+          b=s.find('};',a)+2
           asset=s[a:b]
           out=[]
           for key,data in re.findall(r'([A-Za-z][A-Za-z0-9]*):"(data:image/[^"]+)"',asset):
