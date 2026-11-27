@@ -1,0 +1,28 @@
+name: Integrate open premium silk v216
+on:
+  push:
+    branches: [feature/open-silk-v216]
+    paths: [.github/workflows/test-open-silk-v216.yml]
+permissions:
+  contents: write
+jobs:
+  integrate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 features/integrate-open-silk-v216.py
+      - name: Check silk selection, rendering and delivery
+        run: |
+          npm install --no-save playwright@1.58.2
+          npx playwright install chromium
+          node features/test-open-silk-v216.cjs
+          node features/test-plant-silhouette-v214.cjs
+          node features/browser-smoke.cjs
+      - name: Commit verified HTML to the feature branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet || git commit -m "fix: make premium silk selectable from day one v0.15.216"
+          git push
