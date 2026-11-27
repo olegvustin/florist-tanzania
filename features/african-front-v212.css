@@ -2,8 +2,8 @@
  * Applies to construction, client handoff and their snapshots.
  * All floral positions, flower photos and retail mechanics stay unchanged.
  */
-.bouquet .handoff-paper-front.approved-african-pack-overlay.ftz-test-pack-front,
-.handoff-bouquet .handoff-paper-front.approved-african-pack-overlay.ftz-test-pack-front {
+.bouquet .handoff-paper-front.approved-african-pack-overlay.ftz212-african-front,
+.handoff-bouquet .handoff-paper-front.approved-african-pack-overlay.ftz212-african-front {
   /* Lift the central opaque pocket; left/right create folded front wings.
      It is clipped from the SAME source image as the back, so the ornament
      remains aligned; no colored fake overlay can cover the bouquet. */
@@ -18,22 +18,22 @@
   pointer-events:none!important;
   z-index:33!important;
 }
-.bouquet .handoff-paper-front.approved-african-pack-overlay.ftz-test-pack-front img,
-.handoff-bouquet .handoff-paper-front.approved-african-pack-overlay.ftz-test-pack-front img {
+.bouquet .handoff-paper-front.approved-african-pack-overlay.ftz212-african-front img,
+.handoff-bouquet .handoff-paper-front.approved-african-pack-overlay.ftz212-african-front img {
   opacity:1!important;
   mix-blend-mode:normal!important;
 }
 /* The inside greenery belongs behind the opaque front, not in front of
    the patterned side wings. Keep its silhouette narrow around the pocket. */
-.bouquet:has(.ftz-test-pack-front) .ftz-paper-selected-green,
-.handoff-bouquet:has(.ftz-test-pack-front) .ftz-paper-selected-green{
+.bouquet:has(.ftz212-african-front) .ftz-paper-selected-green,
+.handoff-bouquet:has(.ftz212-african-front) .ftz-paper-selected-green{
   clip-path:polygon(19% 0,81% 0,79% 40%,70% 67%,60% 77%,50% 83%,40% 77%,30% 67%,21% 40%)!important;
   -webkit-clip-path:polygon(19% 0,81% 0,79% 40%,70% 67%,60% 77%,50% 83%,40% 77%,30% 67%,21% 40%)!important;
   opacity:.85!important;
 }
 /* No semi-transparent handoff paper layers or matte rectangles. */
-.bouquet .handoff-paper-back.approved-african-pack.ftz-test-pack-back,
-.handoff-bouquet .handoff-paper-back.approved-african-pack.ftz-test-pack-back{
+.bouquet .handoff-paper-back.approved-african-pack.ftz212-african-back,
+.handoff-bouquet .handoff-paper-back.approved-african-pack.ftz212-african-back{
   mix-blend-mode:normal!important;
   opacity:1!important;
 }
