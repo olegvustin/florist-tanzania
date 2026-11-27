@@ -48,7 +48,7 @@ s=s[:a]+part+s[b:]
 # ftz-test-pack-front is absent on some production wrappers.
 old='const classicClass=["kraft","linen","velvet","signature"].includes(approvedWrap)?" classic-material-wrap classic-material-"+approvedWrap:(FTZ_TEST_WRAP_NAMES[approvedWrap]?" ftz-test-pack-front":"");'
 assert s.count(old)==1, 'Missing approved wrapper class generator'
-s=s.replace(old,old+'\\n  const africanClass=["savanna","baobab","kilimanjaro","zanzibar"].includes(approvedWrap)?" ftz212-african-front":"";',1)
+s=s.replace(old,old+chr(10)+'  const africanClass=["savanna","baobab","kilimanjaro","zanzibar"].includes(approvedWrap)?" ftz212-african-front":"";',1)
 old='approved-african-pack-overlay${classicClass}'
 assert s.count(old)==1
 s=s.replace(old,'approved-african-pack-overlay${classicClass}${africanClass}',1)
