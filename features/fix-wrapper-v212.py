@@ -47,7 +47,7 @@ s=s[:a]+part+s[b:]
 # later via Object.assign; their original WebP also contains pale matte ghosts.
 classic_count=0
 for name in ('kraft','linen','velvet','signature'):
-    pattern=r"\\b"+name+r":'(?P<uri>data:image/webp;base64,[A-Za-z0-9+/=]+)'"
+    pattern=r"(?<![A-Za-z])"+name+r":'(?P<uri>data:image/webp;base64,[A-Za-z0-9+/=]+)'"
     m=re.search(pattern,s)
     if not m:raise RuntimeError('Missing classic material '+name)
     uri=m.group('uri')
