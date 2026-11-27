@@ -31,3 +31,5 @@ jobs:
           git add index.html
           git diff --cached --quiet || git commit -m "feat: clean African image background and lift physical front flaps"
           git push
+
+# Revalidate all four explicit African front/back wrappers
