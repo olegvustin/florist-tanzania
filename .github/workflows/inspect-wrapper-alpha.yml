@@ -1,0 +1,41 @@
+name: Diagnose seven wrapper image backgrounds
+on:
+  push:
+    branches: [feature/african-front-mask-clean-v212]
+    paths: [.github/workflows/inspect-wrapper-alpha.yml]
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect transparency and masks
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re,base64,io,json
+          from PIL import Image
+          s=Path('index.html').read_text()
+          a=s.find('const TZ_APPROVED_PACK_IMAGES=')
+          b=s.find(';',a)
+          asset=s[a:b]
+          out=[]
+          for key,data in re.findall(r'([A-Za-z][A-Za-z0-9]*):"(data:image/[^"]+)"',asset):
+            try:
+              img=Image.open(io.BytesIO(base64.b64decode(data.split('base64,')[1]))).convert('RGBA')
+              w,h=img.size
+              points=[(0,0),(w-1,0),(0,h-1),(w-1,h-1),(w//2,0),(0,h//2),(w//2,h//2),(w//2,h-1)]
+              alpha=img.getchannel('A')
+              opaque=sum(1 for p in alpha.getdata() if p>245)
+              visible=sum(1 for p in alpha.getdata() if p>10)
+              out.append({'key':key,'size':[w,h],'bytes':len(data),'corners':[img.getpixel(p) for p in points],'opaque_ratio':round(opaque/(w*h),4),'visible_ratio':round(visible/(w*h),4)})
+            except Exception as e:out.append({'key':key,'error':str(e)})
+          Path('features/wrapper-alpha-report.json').write_text(json.dumps(out,indent=2,ensure_ascii=False))
+          print(json.dumps(out,indent=2,ensure_ascii=False))
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add features/wrapper-alpha-report.json
+          git commit -m "chore: inspect wrapper alpha backgrounds"
+          git push
