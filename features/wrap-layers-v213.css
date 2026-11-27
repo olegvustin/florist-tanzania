@@ -1,0 +1,41 @@
+/* The image already contains material-specific lighting and weave. A box-sized
+   pseudo-element reintroduces a matte even when the source pixels are clear. */
+:is(.bouquet,.handoff-bouquet) > .handoff-paper-front.approved-african-pack-overlay::after,
+:is(.bouquet,.handoff-bouquet) > .handoff-paper-back.approved-african-pack::after {
+  content:none !important;
+}
+
+/* Kraft and linen share coordinates with their own backing, not a common
+   polygon. Draw the cut on the square of the actual raster, independently of
+   the wider DOM box and its object-fit letterboxing. */
+:is(#stage-1 .bouquet,.handoff-bouquet,.bouquet) > .handoff-paper-front.approved-african-pack-overlay.ftz213-classic-front {
+  clip-path:inset(0) !important;
+  -webkit-clip-path:inset(0) !important;
+  opacity:1 !important;
+  mix-blend-mode:normal !important;
+  z-index:49 !important;
+}
+.ftz213-classic-front > .ftz213-front-raster {
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
+.ftz213-classic-front .ftz213-front-image {
+  clip-path:var(--ftz-front-cut);
+  -webkit-clip-path:var(--ftz-front-cut);
+}
+.classic-material-kraft.ftz213-classic-front {
+  /* The folded left wing, crisp angular lip and taller right side. */
+  --ftz-front-cut:polygon(0 15%,3% 15%,6% 18%,13% 20%,18% 20.8%,22% 17.5%,28% 19.6%,36% 22.7%,44% 25.5%,50% 27.7%,55.5% 28.6%,62% 27%,69% 24.9%,77% 22.2%,83% 20.3%,91% 18.6%,97% 16%,100% 15%,100% 100%,0 100%);
+}
+.classic-material-linen.ftz213-classic-front {
+  /* Follow the two curved fabric wings into the saddle where they overlap. */
+  --ftz-front-cut:polygon(0 18%,3% 18.4%,8% 22.5%,14% 26%,21% 31%,30% 37%,38% 42%,46% 48%,51% 51.4%,55% 47%,61% 40.8%,67% 35.5%,74% 31.4%,82% 27.6%,89% 24.1%,95% 21.5%,100% 17.5%,100% 100%,0 100%);
+}
+:is(.bouquet,.handoff-bouquet):has(> .ftz213-classic-front) > .ftz-paper-selected-green{
+  clip-path:polygon(11% 0,89% 0,84% 51%,73% 72%,61% 86%,50% 93%,39% 86%,27% 72%,16% 51%) !important;
+  -webkit-clip-path:polygon(11% 0,89% 0,84% 51%,73% 72%,61% 86%,50% 93%,39% 86%,27% 72%,16% 51%) !important;
+}
