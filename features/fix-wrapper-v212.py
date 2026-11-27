@@ -43,6 +43,19 @@ for name in names:
     count+=1
 assert count==4
 s=s[:a]+part+s[b:]
+
+# Explicit semantic classes for every approved African design; legacy
+# ftz-test-pack-front is absent on some production wrappers.
+old='const classicClass=["kraft","linen","velvet","signature"].includes(approvedWrap)?" classic-material-wrap classic-material-"+approvedWrap:(FTZ_TEST_WRAP_NAMES[approvedWrap]?" ftz-test-pack-front":"");'
+assert s.count(old)==1, 'Missing approved wrapper class generator'
+s=s.replace(old,old+'\\n  const africanClass=["savanna","baobab","kilimanjaro","zanzibar"].includes(approvedWrap)?" ftz212-african-front":"";',1)
+old='approved-african-pack-overlay${classicClass}'
+assert s.count(old)==1
+s=s.replace(old,'approved-african-pack-overlay${classicClass}${africanClass}',1)
+old='approved-african-pack${FTZ_TEST_WRAP_NAMES[approvedWrap]?\' ftz-test-pack-back\':\'\'}'
+assert s.count(old)==1,'Missing approved back class'
+s=s.replace(old,'approved-african-pack${FTZ_TEST_WRAP_NAMES[approvedWrap]?\' ftz-test-pack-back\':\'\'}${africanClass?\' ftz212-african-back\':\'\'}',1)
+
 assert s.count('</head>')==1
 s=s.replace('</head>','<link rel="stylesheet" href="features/african-front-v212.css">\n</head>',1)
 assert s.count('</body>')==1
