@@ -1,0 +1,30 @@
+name: Integrate compact premium silk v217
+on:
+  push:
+    branches: [feature/compact-silk-v217]
+    paths: [.github/workflows/test-compact-silk-v217.yml]
+permissions:
+  contents: write
+jobs:
+  integrate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          cp index.html baseline.html
+          python3 features/integrate-compact-silk-v217.py
+      - name: Check sleeve alignment and delivery
+        run: |
+          npm install --no-save playwright@1.58.2
+          npx playwright install chromium
+          node features/test-compact-silk-v217.cjs
+          node features/test-open-silk-v216.cjs
+          node features/test-plant-silhouette-v214.cjs
+      - name: Commit verified HTML to the feature branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet || git commit -m "style: tighten premium silk silhouette v0.15.217"
+          git push
