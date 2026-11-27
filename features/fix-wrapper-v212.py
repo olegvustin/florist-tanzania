@@ -43,6 +43,28 @@ for name in names:
     count+=1
 assert count==4
 s=s[:a]+part+s[b:]
+# The three classic physical materials (plus premium silk) are embedded
+# later via Object.assign; their original WebP also contains pale matte ghosts.
+classic_count=0
+for name in ('kraft','linen','velvet','signature'):
+    pattern=r"\\b"+name+r":'(?P<uri>data:image/webp;base64,[A-Za-z0-9+/=]+)'"
+    m=re.search(pattern,s)
+    if not m:raise RuntimeError('Missing classic material '+name)
+    uri=m.group('uri')
+    pic=Image.open(io.BytesIO(base64.b64decode(uri.split('base64,',1)[1]))).convert('RGBA')
+    w,h=pic.size
+    silhouette=Image.new('L',(w,h),0)
+    draw=ImageDraw.Draw(silhouette)
+    draw.polygon([(int(x*w),int(y*h)) for x,y in pts],fill=255)
+    silhouette=silhouette.filter(ImageFilter.GaussianBlur(2.2))
+    alpha=ImageChops.multiply(pic.getchannel('A'),silhouette)
+    pic.putalpha(alpha.point(lambda x:0 if x<48 else x))
+    out=io.BytesIO()
+    pic.save(out,format='WEBP',quality=97,method=6)
+    clean='data:image/webp;base64,'+base64.b64encode(out.getvalue()).decode('ascii')
+    s=s[:m.start('uri')]+clean+s[m.end('uri'):]
+    classic_count+=1
+assert classic_count==4
 
 # Explicit semantic classes for every approved African design; legacy
 # ftz-test-pack-front is absent on some production wrappers.
@@ -61,4 +83,5 @@ s=s.replace('</head>','<link rel="stylesheet" href="features/african-front-v212.
 assert s.count('</body>')==1
 s=s.replace('</body>',marker+'\n</body>',1)
 p.write_text(s,encoding='utf-8')
-print('Cleaned',count,'approved image assets; size=',p.stat().st_size)
+assert p.stat().st_size<25*1024*1024,'HTML exceeds 25 MiB limit'
+print('Cleaned',count,'African +',classic_count,'classic/silk assets; size=',p.stat().st_size)
