@@ -1,0 +1,31 @@
+name: Integrate physical wrap layers v213
+on:
+  push:
+    branches: [feature/physical-kraft-linen-v213]
+    paths: [.github/workflows/test-wrap-layers-v213.yml]
+permissions:
+  contents: write
+jobs:
+  integrate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Integrate into standalone game
+        run: python3 features/integrate-wrap-layers-v213.py
+      - name: Install browser and run regressions
+        run: |
+          npm install --no-save playwright@1.58.2
+          npx playwright install chromium
+          node features/test-wrap-layers-v213.cjs
+          node features/test-african-v212.cjs
+          node features/browser-forecast.cjs
+          node features/browser-competitions.cjs
+          node features/browser-smoke.cjs
+      - name: Commit verified game
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet || git commit -m "fix: integrate physical kraft and linen layers v0.15.213"
+          git push
