@@ -35,3 +35,5 @@ jobs:
 # Revalidate all four explicit African front/back wrappers
 
 # Confirm preserved opaque main artwork and transparent corner matte
+
+# Wait for PNG decoding before inspecting alpha
