@@ -28,3 +28,4 @@ jobs:
           git add index.html
           git diff --cached --quiet || git commit -m "style: tighten premium silk silhouette v0.15.217"
           git push
+

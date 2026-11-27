@@ -22,11 +22,11 @@ const url=name=>require('node:url').pathToFileURL(require('node:path').resolve(n
      await p.locator('#ftz193Toolbar [data-style="0"]').click();
      stats[wrap]=await p.evaluate(async()=>{
       const root=$('bouquet'),back=root.querySelector('.handoff-paper-back'),front=root.querySelector('.handoff-paper-front');
-      const rect=el=>{const r=el.getBoundingClientRect(),scene=root.getBoundingClientRect();return [r.x-scene.x,r.y-scene.y,r.width,r.height]};
+      const size=(img,parent)=>{const m=new DOMMatrix(getComputedStyle(parent).transform);return [img.offsetWidth*m.a,img.offsetHeight*m.d]};
       const ib=back.querySelector('img'),ifr=front.querySelector('img');await Promise.all([ib.decode(),ifr.decode()]);
       const scale=el=>{const m=new DOMMatrix(getComputedStyle(el).transform);return [m.a,m.d]};
       const sprouts=[...root.querySelectorAll('.blossom')].map(e=>[e.style.left,e.style.top,e.style.transform]);
-      return {back:rect(ib),front:rect(ifr),backScale:scale(back),frontScale:scale(front),
+      return {back:size(ib,back),front:size(ifr,front),backScale:scale(back),frontScale:scale(front),
         imageMatch:ib.src===ifr.src,sprouts,positions:state.positions,clip:getComputedStyle(root.querySelector('.ftz214-plant-bed')).clipPath};
      });
      if(process.env.FTZ_SCREENSHOT_DIR)
@@ -43,8 +43,8 @@ const url=name=>require('node:url').pathToFileURL(require('node:path').resolve(n
    assert(cur.imageMatch);
    assert.deepEqual(cur.backScale,cur.frontScale);
    assert.notEqual(cur.clip,old.clip);
-   assert(cur.back[2]<old.back[2]*.92&&cur.back[3]<old.back[3]*.91);
-   assert(cur.front[2]<old.front[2]*.92&&cur.front[3]<old.front[3]*.91);
+   assert(cur.back[0]<old.back[0]*.92&&cur.back[1]<old.back[1]*.91);
+   assert(cur.front[0]<old.front[0]*.92&&cur.front[1]<old.front[1]*.91);
   }
   console.log('PASS: silk front and back both compact, flowers and velvet unchanged, desktop and mobile');
  }finally{await browser.close();}
