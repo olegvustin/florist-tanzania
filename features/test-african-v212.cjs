@@ -8,7 +8,7 @@ const page=await browser.newPage({viewport:{width:1320,height:960}});
 const errors=[];page.on('pageerror',e=>errors.push(e.message));
 await page.goto('file://'+path.resolve('index.html'),{waitUntil:'domcontentloaded',timeout:90000});
 await page.waitForTimeout(350);
-const results=await page.evaluate((wraps)=>{
+const results=await page.evaluate(async (wraps)=>{
   state.started=true;state.day=0;state.finished=false;state.last=null;
   flowStep=1;flowMax=1;
   state.chosen=['rose','tulip','sun','lav','peony','lily','calla'];
@@ -26,6 +26,7 @@ const results=await page.evaluate((wraps)=>{
     if(!front||!back)throw Error('No front/back '+wrap);
     const flowerNodes=[...bouquet.querySelectorAll('.flower-head.ftz211-unified-bloom')];
     const frontImage=front.querySelector('img');
+    await frontImage.decode();
     const alpha=(()=>{const c=document.createElement('canvas');c.width=frontImage.naturalWidth;c.height=frontImage.naturalHeight;
       const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(frontImage,0,0);
       const pix=(x,y)=>ctx.getImageData(Math.floor(c.width*x),Math.floor(c.height*y),1,1).data[3];
