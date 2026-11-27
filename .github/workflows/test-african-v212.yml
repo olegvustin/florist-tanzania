@@ -1,0 +1,33 @@
+name: Test and integrate clean African wrapping v212
+on:
+  push:
+    branches: [feature/african-front-mask-clean-v212]
+    paths: [.github/workflows/test-african-v212.yml]
+permissions:
+  contents: write
+jobs:
+  integrate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Pillow and clean actual source images
+        run: |
+          python3 -m pip install --user Pillow
+          python3 features/fix-wrapper-v212.py
+      - name: Install and launch browser tests
+        run: |
+          npm install --no-save playwright@1.58.2
+          npx playwright install chromium
+          node features/test-african-v212.cjs
+          node features/browser-bouquet-v211.cjs
+          node features/browser-competitions.cjs
+          node features/browser-forecast.cjs
+          node features/browser-smoke.cjs
+      - name: Commit verified source
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet || git commit -m "feat: clean African image background and lift physical front flaps"
+          git push
