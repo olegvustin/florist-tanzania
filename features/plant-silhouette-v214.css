@@ -1,0 +1,34 @@
+/* Plant pixels below the opening must stay inside the sleeve, including
+   stems and leaves painted into the individual flower images. The mask
+   stays fixed in bouquet coordinates while flowers are dragged/rotated. */
+:is(.bouquet,.handoff-bouquet) > .ftz214-plant-bed {
+  position:absolute;
+  inset:0;
+  z-index:20;
+  pointer-events:none;
+  clip-path:var(--ftz214-plant-cut);
+}
+.ftz214-plant-bed .movable { pointer-events:auto; }
+.handoff-gift .ftz214-plant-bed .movable,
+.snapshot-bouquet .ftz214-plant-bed .movable { pointer-events:none; }
+
+/* Keep the crown open. Below it each mask follows the narrowing sides
+   inside the overlap with the opaque front, not the outer shadow. */
+.ftz214-plant-bed[data-sleeve="savanna"] {
+  --ftz214-plant-cut:polygon(-45% -65%,145% -65%,145% 20%,84% 26%,78% 31%,74% 38%,70% 46%,64% 55%,56% 64%,44% 64%,36% 55%,30% 46%,26% 38%,22% 31%,16% 26%,-45% 20%);
+}
+.ftz214-plant-bed[data-sleeve="baobab"] {
+  --ftz214-plant-cut:polygon(-45% -65%,145% -65%,145% 20%,85% 26%,78% 33%,73% 40%,68% 48%,61% 57%,55% 65%,45% 65%,39% 57%,32% 48%,27% 40%,22% 33%,15% 26%,-45% 20%);
+}
+.ftz214-plant-bed[data-sleeve="kilimanjaro"],
+.ftz214-plant-bed[data-sleeve="zanzibar"] {
+  --ftz214-plant-cut:polygon(-45% -65%,145% -65%,145% 21%,85% 27%,79% 34%,74% 42%,69% 50%,62% 59%,55% 66%,45% 66%,38% 59%,31% 50%,26% 42%,21% 34%,15% 27%,-45% 21%);
+}
+.ftz214-plant-bed[data-sleeve="kraft"],
+.ftz214-plant-bed[data-sleeve="linen"] {
+  --ftz214-plant-cut:polygon(-45% -65%,145% -65%,145% 34%,88% 39%,82% 47%,76% 55%,68% 63%,58% 72%,42% 72%,32% 63%,24% 55%,18% 47%,12% 39%,-45% 34%);
+}
+.ftz214-plant-bed[data-sleeve="velvet"],
+.ftz214-plant-bed[data-sleeve="signature"] {
+  --ftz214-plant-cut:polygon(-45% -65%,145% -65%,145% 34%,87% 40%,80% 48%,74% 56%,66% 64%,55% 72%,45% 72%,34% 64%,26% 56%,20% 48%,13% 40%,-45% 34%);
+}
