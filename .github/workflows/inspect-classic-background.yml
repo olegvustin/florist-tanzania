@@ -1,0 +1,24 @@
+name: Inspect classic wrapper sources
+on:
+  push:
+    branches: [feature/african-front-mask-clean-v212]
+    paths: [.github/workflows/inspect-classic-background.yml]
+jobs:
+  inspect:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('index.html').read_text()
+          for name in ('kraft','linen','velvet','signature'):
+            print('===',name,'===')
+            hits=list(re.finditer(r'(?<![a-zA-Z])'+name+r'\s*:\s*["\']data:image/',s))
+            print('direct data URI',len(hits))
+            for m in hits[:5]:print('AT',m.start(),'CONTEXT',re.sub(r'[A-Za-z0-9+/]{60,}','[BINARY]',s[max(0,m.start()-170):m.end()+50]))
+            for pat in [name+'Pack', name+'Image',name+'Art','classic-material-'+name]:
+              a=list(re.finditer(re.escape(pat),s,re.I))
+              print(pat,len(a),[x.start() for x in a[:5]])
+          PY
