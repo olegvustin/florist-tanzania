@@ -21,8 +21,8 @@ const results=await page.evaluate((wraps)=>{
   for(const wrap of wraps){
     document.getElementById('wrap').value=wrap;render();
     const bouquet=document.getElementById('bouquet');
-    const front=bouquet.querySelector('.handoff-paper-front.ftz-test-pack-front');
-    const back=bouquet.querySelector('.handoff-paper-back.ftz-test-pack-back');
+    const front=bouquet.querySelector('.handoff-paper-front.ftz212-african-front');
+    const back=bouquet.querySelector('.handoff-paper-back.ftz212-african-back');
     if(!front||!back)throw Error('No front/back '+wrap);
     const flowerNodes=[...bouquet.querySelectorAll('.flower-head.ftz211-unified-bloom')];
     const frontImage=front.querySelector('img');
