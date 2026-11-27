@@ -29,7 +29,7 @@ const results=await page.evaluate((wraps)=>{
     const alpha=(()=>{const c=document.createElement('canvas');c.width=frontImage.naturalWidth;c.height=frontImage.naturalHeight;
       const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(frontImage,0,0);
       const pix=(x,y)=>ctx.getImageData(Math.floor(c.width*x),Math.floor(c.height*y),1,1).data[3];
-      return {corner:pix(.97,.76),bottomRight:pix(.94,.88),core:pix(.50,.60)};})();
+      return {corner:pix(.97,.76),bottomRight:pix(.94,.88),core:pix(.50,.50)};})();
     out.push({wrap,alpha,count:flowerNodes.length,
       geometry:flowerNodes.map(el=>({left:el.style.left,top:el.style.top,transform:el.style.transform})),
       opacity:getComputedStyle(front).opacity,
