@@ -59,7 +59,7 @@ function ftz218GreenArt(green,preview=false){
   art+=leaf(end[0]-ax*6,end[1]-ay*6,ax*11,ay*11,green==='fern'?2.2:1.3,j);
  });
  const view=preview?'46 54 194 133':'0 0 290 286';
- const source=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${view}">${defs}${art}</svg>`;
+ const source=`<svg xmlns="http://www.w3.org/2000/svg" width="${preview?194:290}" height="${preview?133:286}" viewBox="${view}">${defs}${art}</svg>`;
  const uri='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(source).replace(/'/g,'%27');
  ftz218GreenCache.set(cacheKey,uri);
  return uri;

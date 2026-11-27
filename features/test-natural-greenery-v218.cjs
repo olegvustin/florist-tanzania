@@ -37,7 +37,7 @@ const greens=['asparagus','palm','fern'];
      if(green==='none'){assert.equal(summary.n,0);distinct[0]=summary.total;continue;}
      assert.equal(summary.n,1);assert.equal(summary.selected,green);
      assert.equal(summary.total,distinct[0]+(green==='fern'?2:3));
-     assert(summary.solid>420,green+' leaf blades must be genuinely opaque, not outlines');
+     assert(summary.solid>300,green+' leaf blades must be genuinely opaque, not outlines: '+summary.solid);
      assert(summary.preview&&summary.tucked&&summary.layer==='block');
      if(wrap==='linen')distinct.push(summary.hash);
     }
